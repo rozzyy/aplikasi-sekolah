@@ -1,108 +1,78 @@
 <template>
-  <div>
-    <div>
-      <vs-navbar square text-white color="#2f3866" fixed v-model="active2">
-        <template #right>
-          <div style="cursor: pointer" @click="active2 = !active2">
-            <b-row>
-              <b-col md="4">
-                <vs-avatar circle size="40">
-                  <img src="https://picsum.photos/id/1/200/300" alt="" />
-                </vs-avatar>
-              </b-col>
-              <b-col>
-                Abdul Hakim
-                <div>
-                  <small>1234567890</small>
-                </div>
-              </b-col>
-            </b-row>
-          </div>
-        </template>
-      </vs-navbar>
-    </div>
-    <div class="hidden">
-      <vs-sidebar
-        square
-        background="#2f3866"
-        textWhite
-        reduce
-        v-model="active"
-        open
-      >
-        <template #logo>
-          <!-- ...img logo -->
-        </template>
-        <vs-sidebar-item id="home" to="/">
-          <template #icon>
-            <i class="fa fa-home"></i>
-          </template>
-          <div class="text-danger font-weight-bold h5">
-            Home
-          </div>
-        </vs-sidebar-item>
-        <vs-sidebar-item id="market" to="/profil">
-          <template #icon>
-            <i class="fa fa-user"></i>
-          </template>
-          <div class="text-danger font-weight-bold h5">
-            Profil Guru
-          </div>
-        </vs-sidebar-item>
-        <vs-sidebar-item id="tugas" to="/tugas">
-          <template #icon>
-            <i class="fa fa-book"></i>
-          </template>
-          <div class="text-danger font-weight-bold h5">
-            Tugas
-          </div>
-        </vs-sidebar-item>
-        <vs-sidebar-item id="elearning" to="/e-learning">
-          <template #icon>
-            <i class="fa fa-graduation-cap"></i>
-          </template>
-          <div class="text-danger font-weight-bold h5">
-            E-Learning
-          </div>
-        </vs-sidebar-item>
-        <template #footer>
-          <vs-tooltip right>
-            <vs-avatar badge-color="danger" badge-position="top-right">
-              <i class="fa fa-bell text-dark"></i>
-              <template #badge>
-                28
-              </template>
-            </vs-avatar>
-            <template #tooltip>
-              Notifikasi
-            </template>
-          </vs-tooltip>
-        </template>
-      </vs-sidebar>
-      <vs-dialog prevent-close v-model="active2">
-        <template #header>
-          <h5>Menu Options</h5>
-        </template>
-
-        <template #footer>
-          <div class="footer-dialog">
-            <vs-button block to="/profil">
-              <i class="fa fa-user mx-2"></i> Profil Guru
-            </vs-button>
-            <vs-button
-              color="rgb(234,66,44)"
-              gradient
-              block
-              @click="openLoading"
+  <div class="flex">
+    <div class="w-16 fixed z-50">
+      <div class="bg-indigo-800 h-screen pt-2">
+        <nav class="text-white">
+          <ul>
+            <li
+              v-for="(item, index) in menu"
+              :key="index"
+              class="hover:text-gray-300 cursor-pointer mt-8 text-center"
             >
-              <i class="fa fa-power-off mx-2"></i> Log Out
-            </vs-button>
-          </div>
-        </template>
-      </vs-dialog>
+              <div @mouseover="hover = item.name" @mouseleave="hover = ''" :class="{'border-l-4': $route.path === item.path, 'border-blue-300': $route.path === item.path, 'rounded-l-sm': $route.path === item.path}">
+                <router-link :to="item.path">
+                  <i :class="item.icon"></i>
+                </router-link>
+              </div>
+              <transition
+                enter-active-class="transition-all duration-500 ease-out"
+                leave-active-class="transition-all duration-200 ease-out"
+                leave-class="transform translate-x-10"
+                enter-class="transform translate-x-10"
+              >
+                <div
+                  v-if="hover === item.name"
+                  class="fixed bg-gray-900 ml-16 -mt-8 rounded-md shadow-md"
+                >
+                  <div class="px-8 font-bold">
+                    {{ item.name }}
+                  </div>
+                </div>
+              </transition>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
-    <div style="margin-left: 4rem; margin-top: 4rem; margin-right: 0.5rem;">
-      <router-view />
+    <div class="w-11/12">
+      <div class="fixed w-full z-40">
+        <div class="bg-gray-800 py-2 text-white">
+          <div class="grid grid-cols-2">
+            <div>1</div>
+            <div>
+              <div class="float-right">
+                <div
+                  class="bg-gray-300 rounded-full h-12 w-12 mx-3 text-center hover:bg-gray-500 cursor-pointer"
+                  @click="user"
+                >
+                  <i class="fa fa-user text-black mt-4"></i>
+                </div>
+                <transition enter-active-class="transition-all duration-300 ease-out" leave-class="transform translate-y-10" leave-active-class="transition-all duration-300 ease-out" enter-class="transform translate-y-10">
+                  <div
+                    class="absolute -ml-48 w-1/5 text-black bg-gray-300 rounded-md shadow-md"
+                    v-if="settingShow"
+                  >
+                    <div
+                      class="hover:bg-gray-600 rounded-t-md p-3 cursor-pointer font-bold hover:text-gray-300"
+                    >
+                      <i class="fa fa-cog"></i> Pengaturan
+                    </div>
+                    <div
+                      class="hover:bg-gray-600 rounded-b-md p-3 cursor-pointer font-bold hover:text-gray-300"
+                      @click="logout"
+                    >
+                      <i class="fa fa-power-off"></i> Keluar
+                    </div>
+                  </div>
+                </transition>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-11/12 mt-24 ml-24 z-0 absolute">
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
@@ -120,6 +90,30 @@ export default {
       input1: "",
       input2: "",
       checkbox1: false,
+      hover: "",
+      settingShow: false,
+      menu: [
+        {
+          name: "Home",
+          icon: "fa fa-home fa-2x",
+          path: '/'
+        },
+        {
+          name: "Profil",
+          icon: "fa fa-user fa-2x",
+          path: '/profil'
+        },
+        {
+          name: "E-Learning",
+          icon: "fa fa-graduation-cap fa-2x",
+          path: '/e-learning'
+        },
+        {
+          name: "Tugas",
+          icon: "fa fa-book fa-2x",
+          path: '/tugas'
+        }
+      ]
     };
   },
   methods: {
@@ -133,6 +127,17 @@ export default {
       this.$router.push({ name: "Login" });
       this.active2 = false;
       loading.close();
+    },
+    user() {
+      if (this.settingShow === false) {
+        this.settingShow = true;
+      } else {
+        this.settingShow = false;
+      }
+    },
+    logout () {
+      localStorage.clear()
+      this.$router.push({ name: 'Login' })
     }
   }
 };

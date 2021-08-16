@@ -6,64 +6,76 @@
       height: '100vh'
     }"
   >
-    <div class="container">
-      <div class="pt-5">
-        <b-row class="pt-5" style="margin-top: 6vh;">
-          <b-col></b-col>
-          <b-col md="7">
-            <b-row>
-              <b-col></b-col>
-              <b-col md="8" class="bg-login rounded-end py-5">
-                <div class="mx-3 text-light text-center">
-                  <div>
-                    <i class="fa fa-school fa-5x"></i>
-                    <h5>SMK MUSDA PERBAUNGAN</h5>
-                  </div>
-                  <h3>SELAMAT DATANG</h3>
-                  <p>Silahkan Login untuk masuk ke portal</p>
+    <div class="flex flex-wrap">
+      <div
+        class="bg-gray-800 mx-auto mt-32 w-1/3 rounded-md px-8 py-12 text-white"
+      >
+        <div class="text-center text-xl font-bold">SELAMAT DATANG</div>
+        <div class="text-center font-bold">
+          Login ke akun office SMK MUSDA PERBAUNGAN
+        </div>
+        <form @submit.prevent="login">
+          <div class="m-3">
+            <label for="nip">NIP/NISN</label>
+            <div class="text-black">
+              <div class="inline-flex w-full">
+                <div
+                  class="bg-gray-300 rounded-l-md p-3 border-none border-gray-500"
+                >
+                  <i class="fa fa-user text-gray-700"></i>
                 </div>
-                <form @submit.prevent="login">
-                  <div class="m-2">
-                    <vs-input :state="errors.hasOwnProperty('no_induk') ? 'danger' : ''" block placeholder="NIP" v-model="form.no_induk">
-                      <template #icon>
-                        <i class="fa fa-user"></i>
-                      </template>
-                    </vs-input>
-                    <em v-if="errors.hasOwnProperty('no_induk')" class="text-danger">
-                      <small v-for="(item, index) in errors.no_induk" :key="index">
-                        {{ item }}
-                      </small>
-                    </em>
-                  </div>
-                  <div class="m-2">
-                    <vs-input type="password" :state="errors.hasOwnProperty('password') ? 'danger' : ''" block placeholder="Password" v-model="form.password">
-                      <template #icon>
-                        <i class="fa fa-lock"></i>
-                      </template>
-                    </vs-input>
-                    <em v-if="errors.hasOwnProperty('password')" class="text-danger">
-                      <small v-for="(item, index) in errors.password" :key="index">
-                        <div>
-                          {{ item }}
-                        </div>
-                      </small>
-                    </em>
-                  </div>
-                  <div class="d-flex justify-content-center">
-                    <vs-button gradient block type="submit">
-                      Masuk
-                    </vs-button>
-                  </div>
-                  <div class="text-light text-center">
-                    Tidak bisa login? Silahkan hubungi admin sekolah.
-                  </div>
-                </form>
-              </b-col>
-              <b-col></b-col>
-            </b-row>
-          </b-col>
-          <b-col></b-col>
-        </b-row>
+                <input
+                  type="text"
+                  class="bg-gray-300 w-full border-none rounded-r-md focus:outline-none p-2"
+                  v-model="form.no_induk"
+                />
+              </div>
+            </div>
+            <em class="text-red-600" v-if="errors.hasOwnProperty('no_induk')"
+              >
+              <div v-for="(item, index) in errors.no_induk" :key="index">
+                {{ item }}
+              </div>
+            </em
+            >
+          </div>
+          <div class="m-3">
+            <label for="nip">PASSWORD</label>
+            <div class="text-black">
+              <div class="inline-flex w-full">
+                <div
+                  class="bg-gray-300 rounded-l-md p-3 border-none border-gray-500"
+                >
+                  <i class="fa fa-lock text-gray-700"></i>
+                </div>
+                <input
+                  type="password"
+                  class="bg-gray-300 w-full border-none rounded-r-md focus:outline-none p-2"
+                  v-model="form.password"
+                />
+              </div>
+            </div>
+            <em class="text-red-600" v-if="errors.hasOwnProperty('password')"
+              >
+              <div v-for="(item, index) in errors.password" :key="index">
+                {{ item }}
+              </div>
+            </em
+            >
+          </div>
+          <div class="mx-3 my-4">
+            <button
+              type="submit"
+              class="bg-blue-500 w-full p-3 font-bold hover:bg-blue-600 rounded-md focus:outline-none"
+            >
+              <i class="fa fa-spinner animate-spin" v-if="isLoading"></i>
+              Masuk
+            </button>
+          </div>
+        </form>
+        <div class="m-3">
+          Tidak bisa login ? Silahkan hubungi admin sekolah.
+        </div>
       </div>
     </div>
   </div>
@@ -76,41 +88,52 @@
 // eslint-disable-line no-unused-vars
 
 import backPic from "@/assets/loginback.jpeg";
-import axios from 'axios'
-
+import axios from "axios";
 
 export default {
   data() {
     return {
       backPic: backPic,
       form: {
-        no_induk: '',
-        password: ''
+        no_induk: "",
+        password: ""
       },
-      errors: []
+      errors: [],
+      isLoading: false
     };
   },
   methods: {
-    login () {
-        axios.post("/api/auth/login", this.form).then(response => {
-            console.log(response.data)
-            localStorage.setItem("tokenLog", JSON.stringify(response.data.token))
-            localStorage.setItem('role', JSON.stringify(response.data.role))
-            localStorage.setItem('user', JSON.stringify(response.data.data))
+    login() {
+      this.errors = ''
+      this.isLoading = true
+      axios
+        .post("/api/auth/login", this.form)
+        .then(response => {
+          this.isLoading = false
+          console.log(response.data);
+          localStorage.setItem("tokenLog", JSON.stringify(response.data.token));
+          localStorage.setItem("role", JSON.stringify(response.data.role));
+          localStorage.setItem("user", JSON.stringify(response.data.data));
 
-            if (localStorage.getItem('tokenLog')) {
-              if (this.$route.params.nextUrl != null) {
-                  this.$router.push(this.$route.params.nextUrl)
+          if (localStorage.getItem("tokenLog")) {
+            if (this.$route.params.nextUrl != null) {
+              this.$router.push(this.$route.params.nextUrl);
+            } else {
+              if (response.data.role[0] === 'siswa') {
+                this.$router.push({ name: 'AdminHome' })
               } else {
-                  this.$router.push('/')
+                this.$router.push({ name: 'Home' })
               }
             }
-            this.errors = []
-        }).catch(error => {
-          if (error.response.status === 400) {
-            this.errors = error.response.data.errors
           }
+          this.errors = [];
         })
+        .catch(error => {
+          this.isLoading = false
+          if (error.response.status === 400) {
+            this.errors = error.response.data.errors;
+          }
+        });
     }
   }
 };
