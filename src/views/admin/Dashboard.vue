@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex">
-      <div class="w-1/5 fixed">
+      <div class="fixed z-50 w-56 flex-none">
         <div class="bg-indigo-700 text-white h-screen overflow-auto">
           <div class="bg-indigo-800 p-2">
             <div class="grid grid-cols-12">
@@ -101,9 +101,9 @@
           </div>
         </div>
       </div>
-      <div class="w-4/5 ml-64">
+      <div class="flex-grow ml-56">
         <div>
-          <nav class="bg-gray-100 w-4/5 fixed z-10">
+          <nav class="bg-gray-100 z-10 w-5/6 xl:w-10/12 fixed">
             <div class="grid grid-cols-12 shadow-md">
               <div class="col-span-6">
                 <div class="m-4">
@@ -141,9 +141,9 @@
                       enter-class="transform translate-y-10"
                     >
                       <div
-                        class="bg-gray-100 absolute mt-1 w-3/12 -ml-56 shadow-md rounded"
+                        class="bg-gray-100 absolute mt-1 w-3/12 -ml-56 shadow-md rounded z-40"
                         v-if="showSet"
-                        v-outside-click="close"
+                        v-click-outside="close"
                       >
                         <ul class="cursor-pointer">
                           <li class="py-3 px-8 hover:bg-gray-300">
@@ -181,6 +181,7 @@
 // eslint-disable-next-line
 // eslint-disable vue/no-unused-vars
 // eslint-disable-line no-unused-vars
+
 export default {
   data() {
     return {
@@ -248,21 +249,31 @@ export default {
           children: [
             {
               name: "Daftar Guru",
-              path: "/office/guru"
+              path: "/office/pegawai/guru"
             },
             {
               name: "Daftar Staff",
-              path: "/office/staff"
+              path: "/office/pegawai/staff"
             }
           ]
         },
         {
           name: "Siswa",
-          icon: "fa fa-user",
+          icon: "fa fa-user-graduate",
           children: [
             {
               name: "Daftar Siswa",
               path: "/office/siswa"
+            }
+          ]
+        },
+        {
+          name: "Orang Tua",
+          icon: "fa fa-user",
+          children: [
+            {
+              name: "Daftar Orang Tua",
+              path: "/office/ortu"
             }
           ]
         },
@@ -306,7 +317,7 @@ export default {
             }
           ]
         }
-      ]
+      ],
     };
   },
   methods: {
@@ -333,7 +344,7 @@ export default {
     logout() {
       localStorage.clear();
       this.$router.push({ name: "Login" });
-    }
+    },
   }
 };
 </script>

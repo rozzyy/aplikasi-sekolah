@@ -33,7 +33,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
         meta: {
           requiresAuth: true,
-          access: ['ortu']
         }
       },
       {
@@ -42,7 +41,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/ProfilGuru.vue'),
         meta: {
           requiresAuth: true,
-          access: ['ortu']
         }
       },
       {
@@ -51,7 +49,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "tugas" */ '../views/Tugas.vue'),
         meta: {
           requiresAuth: true,
-          access: ['ortu']
         }
       },
       {
@@ -60,7 +57,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "elearning" */ '../views/Elearning.vue'),
         meta: {
           requiresAuth: true,
-          access: ['ortu']
         }
       },
     ]
@@ -71,7 +67,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "office" */ '../views/admin/Dashboard.vue'),
     meta: {
       requiresAuth: true,
-      access: ['siswa']
     },
     children: [
       {
@@ -80,7 +75,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "adminhome" */ '../views/admin/home/Home.vue'),
         meta: {
           requiresAuth: true,
-          access: ['siswa']
         }
       },
       {
@@ -89,7 +83,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "listsekolah" */ '../views/admin/sekolah/data_sekolah/ListSekolah.vue'),
         meta: {
           requiresAuth: true,
-          access: ['siswa']
         }
       },
       {
@@ -98,7 +91,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "listruangan" */ '../views/admin/sekolah/data_ruangan/ListRuangan.vue'),
         meta: {
           requiresAuth: true,
-          access: ['siswa']
         }
       },
       {
@@ -107,7 +99,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "listtahunajaran" */ '../views/admin/sesi_akedemik/tahun_ajaran/ListTahunAjaran.vue'),
         meta: {
           requiresAuth: true,
-          access: ['siswa']
         }
       },
       {
@@ -116,8 +107,44 @@ const routes = [
         component: () => import(/* webpackChunkName: "listsemester" */ '../views/admin/sesi_akedemik/semester/ListSemester.vue'),
         meta: {
           requiresAuth: true,
-          access: ['siswa']
         }
+      },
+      {
+        path: 'pegawai',
+        component: {
+          render(c) {
+            return c("router-view");
+          },
+        },
+        meta: {
+          requiresAuth: true,
+        },
+        children: [
+          {
+            path: 'guru',
+            name: 'ListGuru',
+            component: () => import(/* webpackChunkName: "listsemester" */ '../views/admin/pegawai/guru/ListGuru.vue'),
+            meta: {
+              requiresAuth: true,
+            }
+          },
+          {
+            path: 'guru/tambah',
+            name: 'AddGuru',
+            component: () => import(/* webpackChunkName: "listsemester" */ '../views/admin/pegawai/guru/AddGuru.vue'),
+            meta: {
+              requiresAuth: true,
+            }
+          },
+          {
+            path: 'staff',
+            name: 'ListStaff',
+            component: () => import(/* webpackChunkName: "listsemester" */ '../views/admin/pegawai/staff/ListStaff.vue'),
+            meta: {
+              requiresAuth: true,
+            }
+          },
+        ]
       },
       {
         path: 'pengaturan-kelas',
@@ -128,7 +155,6 @@ const routes = [
         },
         meta: {
           requiresAuth: true,
-          access: ['siswa']
         },
         children: [
           {
@@ -137,7 +163,6 @@ const routes = [
             component: () => import(/* webpackChunkName: "listjurusan" */ '../views/admin/pengaturan_kelas/jurusan/ListJurusan.vue'),
             meta: {
               requiresAuth: true,
-              access: ['siswa']
             }
           },
           {
@@ -146,7 +171,6 @@ const routes = [
             component: () => import(/* webpackChunkName: "listtingkatan" */ '../views/admin/pengaturan_kelas/tingkatan/ListTingkatan.vue'),
             meta: {
               requiresAuth: true,
-              access: ['siswa']
             }
           },
           {
@@ -155,7 +179,6 @@ const routes = [
             component: () => import(/* webpackChunkName: "listkelas" */ '../views/admin/pengaturan_kelas/kelas/ListKelas.vue'),
             meta: {
               requiresAuth: true,
-              access: ['siswa']
             }
           },
           {
@@ -164,7 +187,6 @@ const routes = [
             component: () => import(/* webpackChunkName: "listrombel" */ '../views/admin/pengaturan_kelas/rombel/ListRombel.vue'),
             meta: {
               requiresAuth: true,
-              access: ['siswa']
             }
           },
           {
@@ -173,7 +195,6 @@ const routes = [
             component: () => import(/* webpackChunkName: "listpelajaran" */ '../views/admin/pengaturan_kelas/pelajaran/ListPelajaran.vue'),
             meta: {
               requiresAuth: true,
-              access: ['siswa']
             }
           },
         ]

@@ -7,12 +7,28 @@ import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueTailwind from 'vue-tailwind'
+import VCalendar from 'v-calendar'
+import VueSweetalert2 from 'vue-sweetalert2'
+
+// script
+import clickOutside from './helper/clickOutside'
+Vue.directive('click-outside', clickOutside)
 
 // tailwind css
 import './assets/styles/index.css'
+// sweetalert css
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 Vue.use(Vuex)
 Vue.use(VueTailwind)
+
+// sweetalert
+Vue.use(VueSweetalert2)
+
+// date picker
+Vue.use(VCalendar, {
+  componentPrefix: 'vc'
+})
 
 // axios
 Vue.use(VueAxios, axios)
