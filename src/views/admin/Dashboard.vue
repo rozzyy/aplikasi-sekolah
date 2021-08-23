@@ -1,175 +1,158 @@
 <template>
-  <div>
-    <div class="flex">
-      <div class="fixed z-50 w-56 flex-none">
-        <div class="bg-indigo-700 text-white h-screen overflow-auto">
-          <div class="bg-indigo-800 p-2">
-            <div class="grid grid-cols-12">
-              <div class="col-span-3">
-                <i class="fab fa-500px fa-3x"></i>
+  <div class="flex flex-col">
+    <nav class="bg-gray-800 z-40 w-full pb-2 fixed">
+      <div class="grid grid-cols-12 shadow-md">
+        <div class="col-span-6">
+          <div class="grid grid-cols-12 text-white py-1">
+            <div class="col-span-1">
+              <i class="fab fa-500px fa-3x"></i>
+            </div>
+            <div class="col-span-9 font-bold">
+              <div>
+                SMK MUSDA
               </div>
-              <div class="col-span-9 font-bold">
-                <div>
-                  SMK MUSDA
-                </div>
-                <div>
-                  PERBAUNGAN
-                </div>
+              <div>
+                PERBAUNGAN
               </div>
             </div>
           </div>
-          <div class="p-2">
-            <ul>
-              <li class="my-1 cursor-pointer" @click="notDropdown">
-                <router-link
-                  :class="{
-                    grid: true,
-                    'grid-cols-12': true,
-                    'hover:bg-indigo-900': true,
-                    'bg-indigo-900': $route.name === 'AdminHome',
-                    'p-2': true,
-                    rounded: true
-                  }"
-                  to="/office/dashboard"
-                >
-                  <div class="col-span-2">
-                    <i class="fa fa-tachometer-alt"></i>
-                  </div>
-                  <div class="col-span-10 font-bold">
-                    Dashboard
-                  </div>
-                </router-link>
-              </li>
-              <li
-                class="cursor-pointer my-2"
-                v-for="(item, index) in menu"
-                :key="index"
-                @click="dropdown(item.name)"
+        </div>
+        <div class="col-span-6">
+          <div class="grid grid-cols-12">
+            <div class="col-span-8">
+              <div class="bg-gray-400 rounded-full h-12 w-12 float-right m-1">
+                <div class="text-center mt-3">
+                  <i class="fa fa-user"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-3 text-white">
+              <div class="m-1">
+                <div class="font-bold">{{ user.nama }}</div>
+                <small>{{ role[0].toUpperCase() }}</small>
+              </div>
+            </div>
+            <div class="col-span-1">
+              <div
+                class="m-4 cursor-pointer transition duration-300 ease-in transform hover:scale-125"
+                @click="showSetting"
+              >
+                <i class="fa fa-ellipsis-v text-white"></i>
+              </div>
+              <transition
+                enter-active-class="transition-all duration-300 ease-out"
+                leave-class="transform translate-y-10"
+                leave-active-class="transition-all duration-300 ease-out"
+                enter-class="transform translate-y-10"
               >
                 <div
-                  :class="{
-                    grid: true,
-                    'grid-cols-12': true,
-                    'p-2': true,
-                    rounded: true,
-                    'hover:bg-indigo-900': true,
-                    'bg-indigo-900': menuName === item.name
-                  }"
+                  class="bg-gray-100 absolute mt-1 -ml-64 w-3/12 shadow-md rounded z-40"
+                  v-if="showSet"
+                  v-click-outside="close"
                 >
-                  <div class="col-span-2">
-                    <i :class="item.icon"></i>
-                  </div>
-                  <div class="col-span-10 font-bold">
-                    {{ item.name }}
-                    <i
-                      :class="{
-                        fa: true,
-                        'fa-angle-right': true,
-                        'float-right': true,
-                        transform: true,
-                        'rotate-90': menuName === item.name,
-                        'transition-all': true,
-                        'duration-200': true,
-                        'ease-in': true
-                      }"
-                    ></i>
-                  </div>
+                  <ul class="cursor-pointer">
+                    <li class="py-3 px-8 hover:bg-gray-300">
+                      <i class="fa fa-file-image mr-2"></i> Rubah Foto Profil
+                    </li>
+                    <li class="py-3 px-8 hover:bg-gray-300">
+                      <i class="fa fa-lock mr-2"></i> Rubah Kata Sandi
+                    </li>
+                    <li class="py-3 px-8 hover:bg-gray-300" @click="logout">
+                      <i class="fa fa-power-off mr-2"></i> Logout
+                    </li>
+                  </ul>
                 </div>
-                <ul class="bg-indigo-800" v-if="menuName === item.name">
-                  <li
-                    :class="{
-                      'p-3': true,
-                      'ml-3': true,
-                      'font-bold': true,
-                      'transition-all': true,
-                      'duration-300': true,
-                      'ease-in': true,
-                      transform: true,
-                      'hover:translate-x-2': true,
-                      'translate-x-2': $route.path === children.path
-                    }"
-                    v-for="(children, index) in item.children"
-                    :key="index"
-                  >
-                    <router-link :to="children.path">
-                      <i class="fa fa-angle-right"></i> {{ children.name }}
-                    </router-link>
-                  </li>
-                </ul>
-              </li>
-            </ul>
+              </transition>
+            </div>
           </div>
         </div>
       </div>
-      <div class="flex-grow ml-56">
-        <div>
-          <nav class="bg-gray-100 z-10 w-5/6 xl:w-10/12 fixed">
-            <div class="grid grid-cols-12 shadow-md">
-              <div class="col-span-6">
-                <div class="m-4">
-                  <i class="fa fa-bars"></i>
-                </div>
+    </nav>
+    <div class="flex flex-row pt-16">
+      <nav class="overflow-auto bg-indigo-700 text-white w-2/12 fixed h-full">
+        <ul>
+          <li class="my-1 cursor-pointer" @click="notDropdown">
+            <router-link
+              :class="{
+                grid: true,
+                'grid-cols-12': true,
+                'hover:bg-indigo-900': true,
+                'bg-indigo-900': $route.name === 'AdminHome',
+                'p-2': true,
+                rounded: true
+              }"
+              to="/office/dashboard"
+            >
+              <div class="col-span-2">
+                <i class="fa fa-tachometer-alt"></i>
               </div>
-              <div class="col-span-6">
-                <div class="grid grid-cols-12">
-                  <div class="col-span-7">
-                    <div
-                      class="bg-gray-400 rounded-full h-12 w-12 float-right m-1"
-                    >
-                      <div class="text-center mt-3">
-                        <i class="fa fa-user"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-span-4">
-                    <div class="m-1">
-                      <div class="font-bold">{{ user.nama }}</div>
-                      <small>Pegawai</small>
-                    </div>
-                  </div>
-                  <div class="col-span-1">
-                    <div
-                      class="m-4 cursor-pointer transition duration-300 ease-in transform hover:scale-125"
-                      @click="showSetting"
-                    >
-                      <i class="fa fa-ellipsis-v"></i>
-                    </div>
-                    <transition
-                      enter-active-class="transition-all duration-300 ease-out"
-                      leave-class="transform translate-y-10"
-                      leave-active-class="transition-all duration-300 ease-out"
-                      enter-class="transform translate-y-10"
-                    >
-                      <div
-                        class="bg-gray-100 absolute mt-1 w-3/12 -ml-56 shadow-md rounded z-40"
-                        v-if="showSet"
-                        v-click-outside="close"
-                      >
-                        <ul class="cursor-pointer">
-                          <li class="py-3 px-8 hover:bg-gray-300">
-                            <i class="fa fa-file-image mr-2"></i> Rubah Foto
-                            Profil
-                          </li>
-                          <li class="py-3 px-8 hover:bg-gray-300">
-                            <i class="fa fa-lock mr-2"></i> Rubah Kata Sandi
-                          </li>
-                          <li
-                            class="py-3 px-8 hover:bg-gray-300"
-                            @click="logout"
-                          >
-                            <i class="fa fa-power-off mr-2"></i> Logout
-                          </li>
-                        </ul>
-                      </div>
-                    </transition>
-                  </div>
-                </div>
+              <div class="col-span-10 font-bold">
+                Dashboard
+              </div>
+            </router-link>
+          </li>
+          <li
+            class="cursor-pointer my-2"
+            v-for="(item, index) in menu"
+            :key="index"
+            @click="dropdown(item.name)"
+          >
+            <div
+              :class="{
+                grid: true,
+                'grid-cols-12': true,
+                'p-2': true,
+                rounded: true,
+                'hover:bg-indigo-900': true,
+                'bg-indigo-900': menuName === item.name
+              }"
+            >
+              <div class="col-span-2">
+                <i :class="item.icon"></i>
+              </div>
+              <div class="col-span-10 font-bold">
+                {{ item.name }}
+                <i
+                  :class="{
+                    fa: true,
+                    'fa-angle-right': true,
+                    'float-right': true,
+                    transform: true,
+                    'rotate-90': menuName === item.name,
+                    'transition-all': true,
+                    'duration-200': true,
+                    'ease-in': true
+                  }"
+                ></i>
               </div>
             </div>
-          </nav>
-          <div class="pt-20 px-5 pb-10">
-            <router-view></router-view>
-          </div>
+            <ul class="bg-indigo-800" v-if="menuName === item.name">
+              <li
+                :class="{
+                  'p-3': true,
+                  'ml-3': true,
+                  'font-bold': true,
+                  'transition-all': true,
+                  'duration-300': true,
+                  'ease-in': true,
+                  transform: true,
+                  'hover:translate-x-2': true,
+                  'translate-x-2': $route.path === children.path
+                }"
+                v-for="(children, index) in item.children"
+                :key="index"
+              >
+                <router-link :to="children.path">
+                  <i class="fa fa-angle-right"></i> {{ children.name }}
+                </router-link>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <div class="ml-48 w-11/12">
+        <div class="flex flex-col ml-8 mr-3 my-3">
+          <router-view></router-view>
         </div>
       </div>
     </div>
@@ -188,23 +171,24 @@ export default {
       menuName: "",
       showSet: false,
       user: JSON.parse(localStorage.getItem("user")),
+      role: JSON.parse(localStorage.getItem("role")),
       menu: [
+        // {
+        //   name: "Sekolah",
+        //   icon: "fa fa-building",
+        //   children: [
+        //     {
+        //       name: "Data Sekolah",
+        //       path: "/office/sekolah"
+        //     },
+        //     {
+        //       name: "Data Ruangan",
+        //       path: "/office/ruangan"
+        //     }
+        //   ]
+        // },
         {
-          name: "Sekolah",
-          icon: "fa fa-building",
-          children: [
-            {
-              name: "Data Sekolah",
-              path: "/office/sekolah"
-            },
-            {
-              name: "Data Ruangan",
-              path: "/office/ruangan"
-            }
-          ]
-        },
-        {
-          name: "Sesi Akedemik",
+          name: "Sesi Akademik",
           icon: "fa fa-calendar-alt",
           children: [
             {
@@ -268,26 +252,16 @@ export default {
           ]
         },
         {
-          name: "Orang Tua",
-          icon: "fa fa-user",
-          children: [
-            {
-              name: "Daftar Orang Tua",
-              path: "/office/ortu"
-            }
-          ]
-        },
-        {
           name: "LMS",
           icon: "fa fa-clipboard",
           children: [
             {
               name: "E-Learning",
-              path: "/office/lms/e-learning"
+              path: "/office/e-learning"
             },
             {
               name: "E-Tugas",
-              path: "/office/lms/tugas"
+              path: "/office/tugas"
             }
           ]
         },
@@ -295,34 +269,30 @@ export default {
           name: "Pengaturan",
           icon: "fa fa-cogs",
           children: [
-            {
-              name: "Profil Pengguna",
-              path: "/office/pengaturan/profil"
-            },
+            // {
+            //   name: "Profil Pengguna",
+            //   path: "/office/pengaturan/profil"
+            // },
             {
               name: "Akun Staff",
-              path: "/office/pengaturan/akun/staff"
+              path: "/office/pengaturan/staff"
             },
             {
               name: "Akun Guru",
-              path: "/office/pengaturan/akun/guru"
+              path: "/office/pengaturan/guru"
             },
             {
               name: "Akun Siswa",
-              path: "/office/pengaturan/akun/siswa"
-            },
-            {
-              name: "Akun Orang Tua",
-              path: "/office/pengaturan/akun/ortu"
+              path: "/office/pengaturan/siswa"
             }
           ]
         }
-      ],
+      ]
     };
   },
   methods: {
     dropdown(value) {
-      this.menuName = value
+      this.menuName = value;
     },
     notDropdown() {
       this.menuName = "";
@@ -344,7 +314,7 @@ export default {
     logout() {
       localStorage.clear();
       this.$router.push({ name: "Login" });
-    },
+    }
   }
 };
 </script>

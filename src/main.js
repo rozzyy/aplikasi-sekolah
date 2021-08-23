@@ -9,6 +9,13 @@ import VueAxios from 'vue-axios'
 import VueTailwind from 'vue-tailwind'
 import VCalendar from 'v-calendar'
 import VueSweetalert2 from 'vue-sweetalert2'
+import vSelect from 'vue-select'
+import { Form } from 'vform' 
+import VueApexCharts from 'vue-apexcharts'
+import VueTailwindDatepicker from '@coding-wisely/vue-tailwind-datepicker'
+
+//date picker
+Vue.use(VueTailwindDatepicker)
 
 // script
 import clickOutside from './helper/clickOutside'
@@ -30,10 +37,20 @@ Vue.use(VCalendar, {
   componentPrefix: 'vc'
 })
 
+// vue select
+Vue.component('v-select', vSelect)
+
 // axios
 Vue.use(VueAxios, axios)
 
-axios.defaults.baseURL = 'http://localhost:8000/'
+// window form
+window.Form = Form
+
+// apexchart
+Vue.use(VueApexCharts)
+Vue.component('apexcharts', VueApexCharts)
+
+axios.defaults.baseURL = 'http://localhost:8001/'
 
 Vue.config.productionTip = false
 

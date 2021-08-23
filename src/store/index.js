@@ -1,13 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import Jurusan from './jurusan'
+import TahunAjaran from './tahun_ajaran'
+import Kelas from './kelas'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     isOffice: false,
-    dataGuru: []
+    dataGuru: [],
+    dataStaff: [],
+    dataSiswa: [],
+    isLoading: false,
+    total_page: 0
   },
   mutations: {
     testOffice (state, value) {
@@ -15,6 +22,18 @@ export default new Vuex.Store({
     },
     inputDataGuru (state, data) {
       state.dataGuru = data
+    },
+    inputDataStaff (state, data) {
+      state.dataStaff = data
+    },
+    inputDataSiswa (state, data) {
+      state.dataSiswa = data
+    },
+    loading (state, value) {
+      state.isLoading = value
+    },
+    inputTotal (state, value) {
+      state.total_page = value
     }
   },
   actions: {
@@ -22,16 +41,49 @@ export default new Vuex.Store({
       console.log(value)
       commit('testOffice', value)
     },
-    setDataGuru ({ commit }) {
-      axios.get('/api/profil/guru').then(response => {
+    setDataGuru ({ commit }, params) {
+      commit('loading', true)
+      axios.get('/api/profil/guru', { params: params }).then(response => {
         setTimeout(function () {
-          commit('inputDataGuru', response.data.data)
-        }, 5000)
+          commit('loading', false)
+          commit('inputTotal', response.data.data.count)
+          commit('inputDataGuru', response.data.data.rows)
+        }, 2000)
       }).catch(error => {
+        commit('loading', false)
+        console.log(error)
+      })
+    },
+    setDataStaff ({ commit }, params) {
+      commit('loading', true)
+      axios.get('/api/profil/staff', { params: params }).then(response => {
+        setTimeout(function () {
+          commit('loading', false)
+          commit('inputTotal', response.data.data.count)
+          commit('inputDataStaff', response.data.data.rows)
+        }, 2000)
+      }).catch(error => {
+        commit('loading', false)
+        console.log(error)
+      })
+    },
+    setDataSiswa ({ commit }, params) {
+      commit('loading', true)
+      axios.get('/api/profil/siswa', { params: params }).then(response => {
+        setTimeout(function () {
+          commit('loading', false)
+          commit('inputTotal', response.data.data.count)
+          commit('inputDataSiswa', response.data.data.rows)
+        }, 2000)
+      }).catch(error => {
+        commit('loading', false)
         console.log(error)
       })
     }
   },
   modules: {
+    Jurusan,
+    TahunAjaran,
+    Kelas
   }
 })

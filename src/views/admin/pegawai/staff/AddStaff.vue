@@ -30,10 +30,10 @@
       </div>
       <div class="col-span-8">
         <div class="text-lg font-bold">
-          IDENTITAS GURU
+          IDENTITAS STAFF
         </div>
         <p>Silahkan isi kolom di bawah ini dengan data yang valid.</p>
-        <form @submit.prevent="$route.name === 'EditGuru' ? editGuru($route.params.id) : store()">
+        <form @submit.prevent="$route.name === 'EditStaff' ? editStaff($route.params.id) : store()" id="form">
           <div class="my-3 grid grid-cols-2 gap-4">
             <div>
               <div class="my-3">
@@ -73,13 +73,7 @@
               <div class="my-3">
                 <label for="nama" class="font-bold">Jabatan</label>
                 <div>
-                  <select
-                    name="cars"
-                    id="cars"
-                    v-model="form.jabatan"
-                    class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
-                    form="form"
-                  >
+                  <select name="cars" id="cars" v-model="form.jabatan" class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2" form="form">
                     <option value="staff">Staff</option>
                     <option value="guru">Guru</option>
                   </select>
@@ -212,7 +206,7 @@
                   <input
                     type="text"
                     class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
-                    placeholder="Masukkan Status Pegawai"
+                    placeholder="Masukkan Jenis PTK"
                     v-model="form.status_pegawai"
                   />
                   <small
@@ -272,10 +266,10 @@
                     <option value="Hindu">Hindu</option>
                   </select>
                   <small
-                    v-if="errors.hasOwnProperty('jabatan')"
+                    v-if="errors.hasOwnProperty('agama')"
                     class="text-red-600"
                   >
-                    {{ errors.jabatan[0] }}
+                    {{ errors.agama[0] }}
                   </small>
                 </div>
               </div>
@@ -411,13 +405,13 @@ export default {
     };
   },
   mounted () {
-    if (this.$route.name === 'EditGuru') {
-      this.detailGuru(this.$route.params.id)
+    if (this.$route.name === 'EditStaff') {
+      this.detailStaff(this.$route.params.id)
     }
   },
   methods: {
     backArrow() {
-      this.$router.push({ name: "ListGuru" });
+      this.$router.push({ name: "ListStaff" });
     },
     dateFocus() {
       if (this.calShow === false) {
@@ -461,7 +455,7 @@ export default {
           }
         });
     },
-    editGuru (id) {
+    editStaff (id) {
       this.errors = []
       this.isLoading = true
       this.form.put('/api/profil/pegawai/' + id).then(response => {
@@ -485,7 +479,7 @@ export default {
         }
       })
     },
-    detailGuru (id) {
+    detailStaff (id) {
       axios.get('/api/profil/pegawai/' + id).then(response => {
         console.log(response.data.data)
         this.form.fill(response.data.data)

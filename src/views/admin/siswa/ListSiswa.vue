@@ -3,7 +3,7 @@
     <div class="bg-white shadow-md w-full rounded-md">
       <div class="p-4">
         <div class="grid grid-cols-12">
-          <div class="text-2xl font-bold mb-5 col-span-4">DAFTAR GURU</div>
+          <div class="text-2xl font-bold mb-5 col-span-4">DAFTAR SISWA</div>
           <div class="col-span-7">
             <div class="inline-flex w-full ">
               <div
@@ -38,7 +38,7 @@
                 class="-ml-48 mt-10 bg-black text-white font-bold px-2 rounded-md fixed z-40"
                 v-if="hover"
               >
-                TAMBAH DATA GURU
+                TAMBAH DATA SISWA
               </div>
             </div>
           </div>
@@ -73,7 +73,7 @@
             <div class="grid grid-cols-12 z-0" v-else>
               <div
                 class="col-span-3"
-                v-for="(guru, index) in dataGuru"
+                v-for="(siswa, index) in dataSiswa"
                 :key="index"
               >
                 <div
@@ -88,19 +88,19 @@
                     >
                       <div
                         class="inline-flex py-2 absolute mx-8 rounded-md w-7/12"
-                        v-if="showTools == guru.id"
+                        v-if="showTools == siswa.id"
                         v-click-outside="closeTools"
                       >
                         <div class="bg-blue-500 rounded-l-md hover:bg-blue-800">
                           <div
                             class="text-center w-2/5 py-1 px-4"
-                            @click="editGuru(guru.id)"
+                            @click="editGuru(siswa.id)"
                           >
                             <i class="fa fa-edit text-white"></i>
                           </div>
                         </div>
                         <div class="bg-red-500 rounded-r-md hover:bg-red-800">
-                          <div class="text-center w-2/5 py-1 px-4" @click="removeGuru(guru.id)">
+                          <div class="text-center w-2/5 py-1 px-4" @click="removeSiswa(siswa.id)">
                             <i class="fa fa-trash-alt text-white"></i>
                           </div>
                         </div>
@@ -109,19 +109,19 @@
                     <div class="grid grid-cols-12">
                       <i
                         class="fa fa-bars m-3 text-gray-200 font-bold transform hover:scale-125 col-span-2"
-                        @click="clickTools(guru.id)"
+                        @click="clickTools(siswa.id)"
                       ></i>
                     </div>
                     <div class="text-center" style="margin-top: 150px;">
                       <div class="text-white text-lg font-bold text-center">
-                        {{ guru.nama }}
+                        {{ siswa.nama }}
                       </div>
                       <div class="text-center font-bold text-green-500">
-                        {{ guru.status_pegawai }}
+                        {{ siswa.rombel }}
                       </div>
                       <button
                         class="bg-teal-500 text-white font-bold px-6 rounded-md hover:bg-teal-700 transition-all duration-300 ease-out transform hover:translate-y-2"
-                        @click="detailGuru(guru.id)"
+                        @click="detail(siswa.id)"
                       >
                         Detail
                       </button>
@@ -181,14 +181,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(["dataGuru", "isLoading", "total_page"])
+    ...mapState(["dataSiswa", "isLoading", "total_page"])
   },
   mounted() {
-    this.$store.dispatch("setDataGuru", { page: this.page, limit: this.limit });
+    this.$store.dispatch("setDataSiswa", { page: this.page, limit: this.limit });
   },
   methods: {
     tambah() {
-      this.$router.push({ name: "AddGuru" });
+      this.$router.push({ name: "AddSiswa" });
     },
     clickTools(value) {
       this.showTools = value;
@@ -199,7 +199,7 @@ export default {
     nextPage() {
       this.page = this.page + 1;
       this.currentPage = this.page + 1;
-      this.$store.dispatch("setDataGuru", {
+      this.$store.dispatch("setDataSiswa", {
         page: this.page,
         limit: this.limit
       });
@@ -208,13 +208,13 @@ export default {
     prevPage() {
       this.page = this.page - 1;
       this.currentPage = this.page + 1;
-      this.$store.dispatch("setDataGuru", {
+      this.$store.dispatch("setDataSiswa", {
         page: this.page,
         limit: this.limit
       });
     },
-    removeGuru(id) {
-      axios.delete("/api/profil/pegawai/" + id).then(response => {
+    removeSiswa(id) {
+      axios.delete("/api/profil/siswa/" + id).then(response => {
         this.$swal({
           icon: "success",
           title: "Data berhasil dihapus",
@@ -232,8 +232,8 @@ export default {
     editGuru (id) {
       this.$router.push({ name: 'EditGuru', params: { id: id }})
     },
-    detailGuru (id) {
-      this.$router.push({ name: 'DetailGuru', params: { id: id }})
+    detail (id) {
+      this.$router.push({ name: 'DetailSiswa', params: { id: id }})
     }
   }
 };

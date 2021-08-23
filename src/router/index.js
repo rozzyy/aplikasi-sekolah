@@ -123,7 +123,7 @@ const routes = [
           {
             path: 'guru',
             name: 'ListGuru',
-            component: () => import(/* webpackChunkName: "listsemester" */ '../views/admin/pegawai/guru/ListGuru.vue'),
+            component: () => import(/* webpackChunkName: "listguru" */ '../views/admin/pegawai/guru/ListGuru.vue'),
             meta: {
               requiresAuth: true,
             }
@@ -131,7 +131,23 @@ const routes = [
           {
             path: 'guru/tambah',
             name: 'AddGuru',
-            component: () => import(/* webpackChunkName: "listsemester" */ '../views/admin/pegawai/guru/AddGuru.vue'),
+            component: () => import(/* webpackChunkName: "addguru" */ '../views/admin/pegawai/guru/AddGuru.vue'),
+            meta: {
+              requiresAuth: true,
+            }
+          },
+          {
+            path: 'guru/edit/:id',
+            name: 'EditGuru',
+            component: () => import(/* webpackChunkName: "addguru" */ '../views/admin/pegawai/guru/AddGuru.vue'),
+            meta: {
+              requiresAuth: true,
+            }
+          },
+          {
+            path: 'guru/profil/:id',
+            name: 'DetailGuru',
+            component: () => import(/* webpackChunkName: "detailguru" */ '../views/admin/pegawai/guru/DetailGuru.vue'),
             meta: {
               requiresAuth: true,
             }
@@ -139,7 +155,23 @@ const routes = [
           {
             path: 'staff',
             name: 'ListStaff',
-            component: () => import(/* webpackChunkName: "listsemester" */ '../views/admin/pegawai/staff/ListStaff.vue'),
+            component: () => import(/* webpackChunkName: "liststaff" */ '../views/admin/pegawai/staff/ListStaff.vue'),
+            meta: {
+              requiresAuth: true,
+            }
+          },
+          {
+            path: 'staff/tambah',
+            name: 'AddStaff',
+            component: () => import(/* webpackChunkName: "addstaff" */ '../views/admin/pegawai/staff/AddStaff.vue'),
+            meta: {
+              requiresAuth: true,
+            }
+          },
+          {
+            path: 'staff/edit/:id',
+            name: 'EditStaff',
+            component: () => import(/* webpackChunkName: "editstaff" */ '../views/admin/pegawai/staff/AddStaff.vue'),
             meta: {
               requiresAuth: true,
             }
@@ -197,6 +229,161 @@ const routes = [
               requiresAuth: true,
             }
           },
+        ]
+      },
+      {
+        path: 'siswa',
+        component: {
+          render(c) {
+            return c("router-view");
+          },
+        },
+        meta: {
+          requiresAuth: true,
+        },
+        children: [
+          {
+            path: '/',
+            name: 'ListSiswa',
+            component: () => import(/* webpackChunkName: "listsiswa" */ '../views/admin/siswa/ListSiswa.vue'),
+            meta: {
+              requiresAuth: true,
+            }
+          },
+          {
+            path: 'profil/:id',
+            name: 'DetailSiswa',
+            component: () => import(/* webpackChunkName: "detailsiswa" */ '../views/admin/siswa/DetailSiswa.vue'),
+            meta: {
+              requiresAuth: true,
+            }
+          },
+          {
+            path: 'tambah',
+            name: 'AddSiswa',
+            component: () => import(/* webpackChunkName: "addsiswa" */ '../views/admin/siswa/AddSiswa.vue'),
+            meta: {
+              requiresAuth: true,
+            }
+          },
+        ]
+      },
+      {
+        path: 'e-learning',
+        component: {
+          render(c) {
+            return c("router-view");
+          },
+        },
+        meta: {
+          requiresAuth: true,
+        },
+        children: [
+          {
+            path: '/',
+            name: 'ListElearning',
+            component: () => import(/* webpackChunkName: "addsiswa" */ '../views/admin/elearning/ListElearning.vue'),
+            meta: {
+              requiresAuth: true,
+            }
+          },
+        ]
+      },
+      {
+        path: 'tugas',
+        component: {
+          render(c) {
+            return c("router-view");
+          },
+        },
+        meta: {
+          requiresAuth: true,
+        },
+        children: [
+          {
+            path: '/',
+            name: 'ListTugas',
+            component: () => import(/* webpackChunkName: "addsiswa" */ '../views/admin/tugas/ListTugas.vue'),
+            meta: {
+              requiresAuth: true,
+            }
+          },
+        ]
+      },
+      {
+        path: 'pengaturan',
+        component: {
+          render(c) {
+            return c("router-view");
+          },
+        },
+        meta: {
+          requiresAuth: true,
+        },
+        children: [
+          {
+            path: 'staff',
+            component: {
+              render(c) {
+                return c("router-view");
+              },
+            },
+            meta: {
+              requiresAuth: true,
+            },
+            children: [
+              {
+                path: '/',
+                name: 'AkunStaff',
+                component: () => import(/* webpackChunkName: "akunstaff" */ '../views/admin/akun/staff/AkunStaff.vue'),
+                meta: {
+                  requiresAuth: true,
+                }
+              },
+            ]
+          },
+          {
+            path: 'guru',
+            component: {
+              render(c) {
+                return c("router-view");
+              },
+            },
+            meta: {
+              requiresAuth: true,
+            },
+            children: [
+              {
+                path: '/',
+                name: 'AkunGuru',
+                component: () => import(/* webpackChunkName: "akunguru" */ '../views/admin/akun/guru/AkunGuru.vue'),
+                meta: {
+                  requiresAuth: true,
+                }
+              },
+            ]
+          },
+          {
+            path: 'siswa',
+            component: {
+              render(c) {
+                return c("router-view");
+              },
+            },
+            meta: {
+              requiresAuth: true,
+            },
+            children: [
+              {
+                path: '/',
+                name: 'AkunSiswa',
+                component: () => import(/* webpackChunkName: "akunsiswa" */ '../views/admin/akun/siswa/AkunSiswa.vue'),
+                meta: {
+                  requiresAuth: true,
+                }
+              },
+            ]
+          }
         ]
       }
     ]

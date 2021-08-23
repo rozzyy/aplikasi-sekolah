@@ -36,16 +36,21 @@
     </div>
     <div class="w-11/12">
       <div class="fixed w-full z-40">
-        <div class="bg-gray-800 py-2 text-white">
+        <div :class="{'bg-transparent': scrollPosition == null,  'py-2': true, 'text-white': true, 'bg-indigo-800': scrollPosition > 50 || $route.name !== 'Home', 'transition-all': true, 'duration-300': true, 'ease-out': true}">
           <div class="grid grid-cols-2">
-            <div>1</div>
+            <div class="pl-16 ml-2 mt-3 text-white font-bold">
+              <i class="fa fa-building"></i> SMK MUSDA PERBAUNGAN
+            </div>
             <div>
-              <div class="float-right">
+              <div class="float-right flex">
+                <div class="text-white mt-3 mx-5">
+                  <i class="fa fa-bell text-2xl"></i>
+                </div>
                 <div
-                  class="bg-gray-300 rounded-full h-12 w-12 mx-3 text-center hover:bg-gray-500 cursor-pointer"
+                  class="bg-gray-300 rounded-full h-10 w-10 mx-3 text-center hover:bg-gray-500 cursor-pointer"
                   @click="user"
                 >
-                  <i class="fa fa-user text-black mt-4"></i>
+                  <i class="fa fa-user text-black mt-3"></i>
                 </div>
                 <transition enter-active-class="transition-all duration-300 ease-out" leave-class="transform translate-y-10" leave-active-class="transition-all duration-300 ease-out" enter-class="transform translate-y-10">
                   <div
@@ -70,7 +75,7 @@
           </div>
         </div>
       </div>
-      <div class="w-11/12 mt-24 ml-24 z-0 absolute">
+      <div class="w-full pl-16 z-0 absolute">
         <router-view />
       </div>
     </div>
@@ -112,9 +117,18 @@ export default {
           name: "Tugas",
           icon: "fa fa-book fa-2x",
           path: '/tugas'
+        },
+        {
+          name: "Jadwal",
+          icon: "fa fa-calendar-alt fa-2x",
+          path: '/jadwal'
         }
-      ]
+      ],
+      scrollPosition: null
     };
+  },
+  mounted () {
+    window.addEventListener('scroll', this.updateScroll)
   },
   methods: {
     openLoading() {
@@ -138,6 +152,9 @@ export default {
     logout () {
       localStorage.clear()
       this.$router.push({ name: 'Login' })
+    },
+    updateScroll () {
+      this.scrollPosition = window.scrollY
     }
   }
 };

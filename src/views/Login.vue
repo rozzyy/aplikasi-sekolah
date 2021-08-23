@@ -119,7 +119,7 @@ export default {
             if (this.$route.params.nextUrl != null) {
               this.$router.push(this.$route.params.nextUrl);
             } else {
-              if (response.data.role[0] === 'siswa') {
+              if (response.data.role[0] === 'staff') {
                 this.$router.push({ name: 'AdminHome' })
               } else {
                 this.$router.push({ name: 'Home' })

@@ -1,7 +1,7 @@
 <template>
   <div class="mt-0">
-    <div class="bg-custom rounded">
-      <div class="container py-5 text-white">
+    <div class="bg-custom">
+      <div class="py-16 text-white">
         <div class="mx-8 py-10 grid grid-cols-12 gap-4">
           <div class="col-span-8">
             <h1 class="text-3xl font-bold">Selamat Datang, {{ user.nama }}</h1>
@@ -37,19 +37,22 @@
           </div>
           <div class="text-center col-span-4">
             <i class="fa fa-building fa-10x"></i>
-            <h1 class="text-3xl">SMK MUSDA PERBAUNGAN</h1>
+            <h1 class="text-3xl font-bold">SMK MUSDA PERBAUNGAN</h1>
           </div>
         </div>
       </div>
     </div>
-    <div class="my-5 container">
+    <div class="my-5 px-5 container">
       <div class="font-bold text-lg">
         <h5>Daftar Tugas Hari Ini</h5>
       </div>
-      <carousel loop :nav="false" autoplay :autoplayHoverPause="true">
+      <carousel :nav="true" autoplay :autoplayHoverPause="true">
         <div class="max-w-sm rounded-lg overflow-hidden shadow-lg m-3 transition duration-300 ease-out transform hover:-translate-y-2 cursor-pointer">
+          <div class="absolute p-1 shadow-md text-sm rounded-md bg-white font-bold m-2">
+            MATEMATIKA
+          </div>
           <img
-            class="w-full h-64"
+            class="w-64 h-64"
             src="https://picsum.photos/seed/picsum/200/300"
             alt="Sunset in the mountains"
           />
@@ -78,14 +81,17 @@
         </button>
       </div>
     </div>
-    <div class="my-5 container">
+    <div class="my-5 px-5 container">
       <div class="font-bold text-lg">
         <h5>Daftar E-Learning Hari Ini</h5>
       </div>
-      <carousel loop :nav="false" autoplay :autoplayHoverPause="true">
-        <div class="max-w-sm rounded-lg overflow-hidden shadow-lg m-3 cursor-pointer transition duration-300 ease-out transform hover:-translate-y-2">
+      <carousel :nav="true" autoplay :autoplayHoverPause="true">
+        <div class="w-64 rounded-lg overflow-hidden shadow-lg m-3 cursor-pointer transition duration-300 ease-out transform hover:-translate-y-2">
+          <div class="absolute p-1 shadow-md text-sm rounded-md bg-white font-bold m-2">
+            MATEMATIKA
+          </div>
           <img
-            class="w-full h-64"
+            class="w-full h-48"
             src="https://picsum.photos/seed/picsum/200/300"
             alt="Sunset in the mountains"
           />
