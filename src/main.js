@@ -50,7 +50,7 @@ window.Form = Form
 Vue.use(VueApexCharts)
 Vue.component('apexcharts', VueApexCharts)
 
-axios.defaults.baseURL = 'http://localhost:8001/'
+axios.defaults.baseURL = process.env.VUE_APP_ROOT_API
 
 Vue.config.productionTip = false
 
