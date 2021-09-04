@@ -5,50 +5,40 @@
 
 import axios from 'axios'
 
-export const tahun_ajaran = {
+export const semester = {
     namespaced: true,
     state: {
-        tahun_ajaran: [],
-        tahunAjaranOptions: [],
+        semester: [],
         isLoading: false,
         total_page: 0
     },
     mutations: {
-        inputTahunAjaran (state, data) {
-            state.tahun_ajaran = data
+        inputSemester (state, data) {
+            state.semester = data
         },
         inputLoading (state, value) {
             state.isLoading = value
         },
         inputTotalPage (state, value) {
             state.total_page = value
-        },
-        inputTahunAjaranOptions (state, data) {
-            state.tahunAjaranOptions = data
         }
     },
     actions: {
-        getTahunAjaran({ commit }, params) {
+        getSemester({ commit }, params) {
             commit('inputLoading', true)
-            axios.get('/api/data-induk/tahun-ajaran', { params: params }).then(response => {
+            axios.get('/api/data-induk/semester', { params: params }).then(response => {
                 setTimeout(function () {
                     commit('inputLoading', false)
                     commit('inputTotalPage', response.data.data.count)
-                    commit('inputTahunAjaran', response.data.data.rows)
+                    console.log(response.data.data.rows)
+                    commit('inputSemester', response.data.data.rows)
                 }, 2000)
             }).catch(error => {
                 commit('inputLoading', false)
                 console.log(error)
             })
-        },
-        getTahunAjaranOptions({ commit }) {
-            axios.get('/api/data-induk/tahun-ajaran-options').then(response => {
-                setTimeout(function () {
-                    commit('inputTahunAjaranOptions', response.data.data)
-                }, 2000)
-            })
         }
     }
 }
 
-export default tahun_ajaran
+export default semester

@@ -79,7 +79,7 @@
                 <div
                   class="rounded-lg overflow-hidden shadow-lg m-3 transition duration-300 ease-out transform hover:-translate-y-2 cursor-pointer border border-gray-300"
                 >
-                  <div class="absolute h-full bg-gradient-to-t from-gray-900">
+                  <div class="absolute h-full w-full bg-gradient-to-t from-gray-900">
                     <transition
                       enter-active-class="transition-all duration-300 ease-out"
                       leave-active-class="transition-all duration-300 ease-out"
@@ -185,6 +185,8 @@ export default {
   },
   mounted() {
     this.$store.dispatch("setDataSiswa", { page: this.page, limit: this.limit });
+    console.log(this.dataSiswa)
+    console.log("mount")
   },
   methods: {
     tambah() {

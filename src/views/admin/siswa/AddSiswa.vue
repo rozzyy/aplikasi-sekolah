@@ -41,7 +41,7 @@
               </div>
               Silahkan isi form di bawah ini dengan data yang valid.
             </div>
-            <form class="grid grid-cols-2 gap-8">
+            <form class="grid grid-cols-2 gap-8" @submit.prevent="storeSiswa">
               <div>
                 <div class="mt-3">
                   <label for="nama" class="font-bold">Nama</label>
@@ -49,7 +49,14 @@
                     type="text"
                     class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
                     placeholder="Masukkan Nama"
+                    v-model="formSiswa.nama"
                   />
+                  <small
+                    v-if="errors.hasOwnProperty('nama')"
+                    class="text-red-600"
+                  >
+                  {{ errors.nama[0] }}
+                  </small>
                 </div>
                 <div class="mt-3">
                   <label for="nama" class="font-bold">NIPD</label>
@@ -57,7 +64,14 @@
                     type="text"
                     class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
                     placeholder="Masukkan NIPD"
+                    v-model="formSiswa.nipd"
                   />
+                  <small
+                    v-if="errors.hasOwnProperty('nipd')"
+                    class="text-red-600"
+                  >
+                  {{ errors.nipd[0] }}
+                  </small>
                 </div>
                 <div class="mt-3">
                   <label for="nama" class="font-bold">NIK</label>
@@ -65,7 +79,14 @@
                     type="text"
                     class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
                     placeholder="Masukkan NIK"
+                    v-model="formSiswa.nik"
                   />
+                  <small
+                    v-if="errors.hasOwnProperty('nik')"
+                    class="text-red-600"
+                  >
+                  {{ errors.nik[0] }}
+                  </small>
                 </div>
                 <div class="mt-3">
                   <label for="nama" class="font-bold">Tempat Lahir</label>
@@ -73,7 +94,14 @@
                     type="text"
                     class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
                     placeholder="Masukkan Tempat Lahir"
+                    v-model="formSiswa.tmpt_lahir"
                   />
+                  <small
+                    v-if="errors.hasOwnProperty('tmpt_lahir')"
+                    class="text-red-600"
+                  >
+                  {{ errors.tmpt_lahir[0] }}
+                  </small>
                 </div>
                 <div class="mt-3">
                   <label for="nama" class="font-bold">Email</label>
@@ -81,7 +109,14 @@
                     type="text"
                     class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
                     placeholder="Masukkan Email"
+                    v-model="formSiswa.email"
                   />
+                  <small
+                    v-if="errors.hasOwnProperty('email')"
+                    class="text-red-600"
+                  >
+                  {{ errors.email[0] }}
+                  </small>
                 </div>
                 <div class="mt-3">
                   <label for="jenis kelamin" class="font-bold"
@@ -90,11 +125,18 @@
                   <select
                     class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
                     form="form"
+                    v-model="formSiswa.rombel"
                   >
                     <option>-Pilih Rombel-</option>
                     <option v-for="(item, index) in kelasOptions"
                     :key="index" :value="item">{{ item.nama }}</option>
                   </select>
+                  <small
+                    v-if="errors.hasOwnProperty('rombel')"
+                    class="text-red-600"
+                  >
+                  {{ errors.rombel[0] }}
+                  </small>
                 </div>
               </div>
               <div>
@@ -105,11 +147,18 @@
                   <select
                     class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
                     form="form"
+                    v-model="formSiswa.jenis_kelamin"
                   >
                     <option>-Pilih Jenis Kelamin-</option>
                     <option value="Laki-laki">Laki-laki</option>
                     <option value="Perempuan">Perempuan</option>
                   </select>
+                  <small
+                    v-if="errors.hasOwnProperty('jenis_kelamin')"
+                    class="text-red-600"
+                  >
+                  {{ errors.jenis_kelamin[0] }}
+                  </small>
                 </div>
                 <div class="mt-3">
                   <label for="nama" class="font-bold">NISN</label>
@@ -117,7 +166,13 @@
                     type="text"
                     class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
                     placeholder="Masukkan NISN"
+                    v-model="formSiswa.nisn"
                   />
+                  <small
+                    v-if="errors.hasOwnProperty('nisn')"
+                    class="text-red-600"
+                  >{{ errors.nisn[0] }}
+                  </small>
                 </div>
                 <div class="mt-3">
                   <label for="jenis kelamin" class="font-bold"
@@ -126,11 +181,18 @@
                   <select
                     class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
                     form="form"
+                    v-model="formSiswa.agama"
                   >
                     <option>-Pilih Agama-</option>
                     <option v-for="(item, index) in options"
                     :key="index" :value="item">{{ item }}</option>
                   </select>
+                  <small
+                    v-if="errors.hasOwnProperty('agama')"
+                    class="text-red-600"
+                  >
+                  {{ errors.agama[0] }}
+                  </small>
                 </div>
                 <div class="mt-3">
                   <label for="nama" class="font-bold">Tanggal Lahir</label>
@@ -140,6 +202,7 @@
                         type="text"
                         class="bg-gray-100 border border-r-0 w-full rounded-l-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
                         placeholder="Pilih Tanggal"
+                        v-model="formSiswa.tgl_lahir"
                       />
                       <div
                         class="bg-gray-100 border border-l-0 rounded-r-md p-2 hover:bg-gray-200"
@@ -148,11 +211,18 @@
                         <i class="fa fa-calendar-alt cursor-pointer"></i>
                       </div>
                     </div>
+                    <small
+                    v-if="errors.hasOwnProperty('tgl_lahir')"
+                    class="text-red-600"
+                  >
+                  {{ errors.tgl_lahir[0] }}
+                  </small>
                     <vc-date-picker
                       :model-config="modelConfig"
                       v-if="calShow"
                       class="absolute -ml-64 mt-12"
                       v-click-outside="hideCal"
+                      v-model="formSiswa.tgl_lahir"
                     />
                   </div>
                 </div>
@@ -162,7 +232,14 @@
                     type="text"
                     class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
                     placeholder="Masukkan Nomor Handphone"
+                    v-model="formSiswa.hp"
                   />
+                  <small
+                    v-if="errors.hasOwnProperty('hp')"
+                    class="text-red-600"
+                  >
+                  {{ errors.hp[0] }}
+                  </small>
                 </div>
                 <div class="mt-3">
                   <label for="nama" class="font-bold">Alamat</label>
@@ -170,7 +247,14 @@
                     type="text"
                     class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
                     placeholder="Masukkan Alamat"
+                    v-model="formSiswa.alamat"
                   />
+                  <small
+                    v-if="errors.hasOwnProperty('alamat')"
+                    class="text-red-600"
+                  >
+                  {{ errors.alamat[0] }}
+                  </small>
                 </div>
               </div>
               <div class="float-right">
@@ -298,7 +382,34 @@ export default {
       ],
       options: ['Islam', 'Protestan', 'Katolik', 'Budha', 'Hindu'],
       kelasOptions: [],
-      statusOptions: ['Ayah', 'Ibu', 'Wali']
+      statusOptions: ['Ayah', 'Ibu', 'Wali'],
+      formSiswa: new Form({
+          nama: "",
+          jenis_kelamin: '',
+          nipd: '',
+          nisn: '',
+          nik: '',
+          agama: '',
+          tmpt_lahir: '',
+          tgl_lahir: '',
+          email: '',
+          hp: '',
+          rombel: '',
+          alamat: ''
+      }),
+      formOrtu: new Form({
+          nama: '',
+          pendidikan: '',
+          pekerjaan: '',
+          tahun_lahir: '',
+          nik: '',
+          hp: '',
+          status: '',
+          alamat: '',
+          siswaId: ''
+      }),
+      siswaId: '',
+      errors: []
     };
   },
   mounted () {
@@ -328,6 +439,16 @@ export default {
             console.log(response.data.data)
         }).catch(error => {
             console.log(error)
+        })
+    },
+    storeSiswa () {
+        this.formSiswa.post('/api/profil/siswa').then(response => {
+            const items = response.data.data
+            this.siswaId = items.id
+        }).catch(error => {
+            if (error.response.status === 400) {
+                this.errors = error.response.data.errors
+            }
         })
     }
   }

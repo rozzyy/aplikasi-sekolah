@@ -1,29 +1,5 @@
 <template>
   <div>
-    <transition
-      enter-active-class="transition duration-500 ease-liner"
-      enter-class="transform translate-y-32"
-    >
-      <div v-if="notif">
-        <div
-          class="absolute bg-green-400 right-0 top-0 z-50 shadow-md inline-flex m-3"
-        >
-          <div class="bg-green-500">
-            <div class="my-5 px-4">
-              <i class="fa fa-check-circle fa-2x text-white"></i>
-            </div>
-          </div>
-          <div class="font-bold text-white pl-2 pb-5 pt-3 pr-24">
-            <div>
-              SUCCESS
-            </div>
-            <div>
-              Data Anda Berhasil Ditambahkan.
-            </div>
-          </div>
-        </div>
-      </div>
-    </transition>
     <div class="bg-white p-5 rounded-lg shadow-md">
       <div class="my-4 grid grid-cols-12">
         <div class="text-xl font-bold col-span-6">
@@ -163,19 +139,20 @@
                         class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
                         form="form"
                       >
-                        <option value="Teknik Kendaraan Ringan"
+                        <option value="">-Pilih Jurusan-</option>
+                        <option value="Teknik Kendaraan Ringan (TKR)"
                           >Teknik Kendaraan Ringan (TKR)</option
                         >
-                        <option value="Mekanisme Pertanian"
+                        <option value="Mekanisme Pertanian (MP)"
                           >Mekanisme Pertanian (MP)</option
                         >
-                        <option value="Teknik Sepeda Motor"
+                        <option value="Teknik Sepeda Motor (TSM)"
                           >Teknik Sepeda Motor (TSM)</option
                         >
-                        <option value="Teknik Komputer Jaringan"
+                        <option value="Teknik Komputer Jaringan (TKJ)"
                           >Teknik Komputer Jaringan (TKJ)</option
                         >
-                        <option value="Rekayasa Perangkat Lunak"
+                        <option value="Rekayasa Perangkat Lunak (RPL)"
                           >Rekayasa Perangkat Lunak (RPL)</option
                         >
                       </select>
@@ -200,6 +177,7 @@
                         class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
                         form="form"
                       >
+                        <option value="">-Pilih Akreditasi-</option>
                         <option value="A"
                           >A</option
                         >
@@ -310,6 +288,7 @@ export default {
         .get("/api/data-induk/jurusan/" + id)
         .then(response => {
           this.detail = response.data.data;
+          console.log(this.detail)
           this.id = this.detail.id;
           this.form.fill(this.detail);
         })
@@ -372,6 +351,8 @@ export default {
     },
     modal() {
       this.errors = [];
+      this.form.reset()
+      this.form.clear()
       this.editMode = false;
       this.showModal = true;
     },

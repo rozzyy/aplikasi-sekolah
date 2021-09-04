@@ -4,6 +4,9 @@ import axios from 'axios'
 import Jurusan from './jurusan'
 import TahunAjaran from './tahun_ajaran'
 import Kelas from './kelas'
+import Tingkatan from './tingkatan'
+import User from './user'
+import Semester from './semester'
 
 Vue.use(Vuex)
 
@@ -84,6 +87,9 @@ export default new Vuex.Store({
   modules: {
     Jurusan,
     TahunAjaran,
-    Kelas
+    Kelas,
+    Tingkatan,
+    User,
+    Semester
   }
 })

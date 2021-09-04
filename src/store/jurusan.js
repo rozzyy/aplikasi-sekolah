@@ -9,6 +9,7 @@ export const jurusan = {
     namespaced: true,
     state: {
         jurusan: [],
+        jurusanOptions: [],
         isLoading: false,
         total_page: 0
     },
@@ -21,6 +22,9 @@ export const jurusan = {
         },
         inputTotalPage (state, value) {
             state.total_page = value
+        },
+        inputOptionJurusan (state, data) {
+            state.jurusanOptions = data
         }
     },
     actions: {
@@ -35,6 +39,14 @@ export const jurusan = {
                 }, 2000)
             }).catch(error => {
                 commit('inputLoading', false)
+                console.log(error)
+            })
+        },
+        getJurusan ({ commit }) {
+            axios.get('/api/data-induk/jurusan-options').then(response => {
+                console.log(response.data.data)
+                commit('inputOptionJurusan', response.data.data)
+            }).catch(error => {
                 console.log(error)
             })
         }

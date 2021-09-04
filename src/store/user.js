@@ -5,17 +5,16 @@
 
 import axios from 'axios'
 
-export const tahun_ajaran = {
+export const user = {
     namespaced: true,
     state: {
-        tahun_ajaran: [],
-        tahunAjaranOptions: [],
+        user: [],
         isLoading: false,
         total_page: 0
     },
     mutations: {
-        inputTahunAjaran (state, data) {
-            state.tahun_ajaran = data
+        inputJurusan (state, data) {
+            state.user = data
         },
         inputLoading (state, value) {
             state.isLoading = value
@@ -23,32 +22,23 @@ export const tahun_ajaran = {
         inputTotalPage (state, value) {
             state.total_page = value
         },
-        inputTahunAjaranOptions (state, data) {
-            state.tahunAjaranOptions = data
-        }
     },
     actions: {
-        getTahunAjaran({ commit }, params) {
+        getDataUser ({ commit }, params) {
             commit('inputLoading', true)
-            axios.get('/api/data-induk/tahun-ajaran', { params: params }).then(response => {
+            axios.get('/api/auth/user', { params: params }).then(response => {
+                console.log(response.data.data)
                 setTimeout(function () {
                     commit('inputLoading', false)
                     commit('inputTotalPage', response.data.data.count)
-                    commit('inputTahunAjaran', response.data.data.rows)
+                    commit('inputJurusan', response.data.data.rows)
                 }, 2000)
             }).catch(error => {
                 commit('inputLoading', false)
                 console.log(error)
             })
         },
-        getTahunAjaranOptions({ commit }) {
-            axios.get('/api/data-induk/tahun-ajaran-options').then(response => {
-                setTimeout(function () {
-                    commit('inputTahunAjaranOptions', response.data.data)
-                }, 2000)
-            })
-        }
     }
 }
 
-export default tahun_ajaran
+export default user

@@ -35,15 +35,12 @@
               </tr>
             </thead>
             <tr v-if="Kelas.isLoading" class="text-center">
-              <td colspan="4" class="text-teal-500 font-bold">
+              <td colspan="5" class="text-teal-500 font-bold">
                 <i class="fa fa-spinner animate-spin"></i>
                 Loading...
               </td>
             </tr>
-            <tbody
-              class="bg-white divide-y"
-              v-else-if="Kelas.total_page !== 0"
-            >
+            <tbody class="bg-white divide-y" v-else-if="Kelas.total_page !== 0">
               <tr
                 v-for="(item, index) in Kelas.kelas"
                 :key="index"
@@ -57,12 +54,12 @@
                 </td>
                 <td class="px-6 py-2 whitespace-no-wrap">
                   <span v-if="item.Tingkatan">
-                    {{ item.Tingkatan.nama }}
+                    {{ item.Jurusan.nama }}
                   </span>
                 </td>
                 <td class="px-6 py-2 whitespace-no-wrap">
                   <span v-if="item.Jurusan">
-                    {{ item.Jurusan.nama }}
+                    {{ item.Tingkatan.nama }}
                   </span>
                 </td>
                 <td class="px-6 py-2 whitespace-no-wrap">
@@ -87,7 +84,7 @@
               </tr>
             </tbody>
             <tr v-else>
-              <td colspan="4" class="text-center font-bold text-red-400">
+              <td colspan="5" class="text-center font-bold text-red-400">
                 Data belum tersedia.
               </td>
             </tr>
@@ -134,7 +131,9 @@
                 <div class="grid grid-cols-12">
                   <div class="col-span-6">
                     <div class="text-xl m-3 font-bold">
-                      {{ editMode ? "Edit Tahun Ajaran" : "Tambah Tahun Ajaran" }}
+                      {{
+                        editMode ? "Edit Tahun Ajaran" : "Tambah Tahun Ajaran"
+                      }}
                     </div>
                   </div>
                   <div class="col-span-6">
@@ -149,13 +148,75 @@
                 <form @submit.prevent="editMode ? update(id) : store()">
                   <div class="m-4">
                     <label for="nama" class="font-bold">
-                      Nama Tahun Ajaran
+                      Jurusan
+                    </label>
+                    <div>
+                      <select
+                        class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
+                        form="form"
+                        v-model="form.jurusanId"
+                      >
+                        <option value="">-Pilih Jurusan-</option>
+                        <option
+                          v-for="(item, index) in Jurusan.jurusanOptions"
+                          :key="index"
+                          :value="item.id"
+                          >{{ item.nama }}</option
+                        >
+                      </select>
+                      <em
+                        class="text-red-600"
+                        v-if="errors.hasOwnProperty('jurusanId')"
+                      >
+                        <div
+                          v-for="(item, index) in errors.jurusanId"
+                          :key="index"
+                        >
+                          {{ item }}
+                        </div>
+                      </em>
+                    </div>
+                  </div>
+                  <div class="m-4">
+                    <label for="nama" class="font-bold">
+                      Tingkatan
+                    </label>
+                    <div>
+                      <select
+                        class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
+                        form="form"
+                        v-model="form.tingkatanId"
+                      >
+                        <option value="">-Pilih Tingkatan-</option>
+                        <option
+                          v-for="(item, index) in Tingkatan.tingkatanOptions"
+                          :key="index"
+                          :value="item.id"
+                          >{{ item.nama }}</option
+                        >
+                      </select>
+                      <em
+                        class="text-red-600"
+                        v-if="errors.hasOwnProperty('tingkatanId')"
+                      >
+                        <div
+                          v-for="(item, index) in errors.tingkatanId"
+                          :key="index"
+                        >
+                          {{ item }}
+                        </div>
+                      </em>
+                    </div>
+                  </div>
+                  <div class="m-4">
+                    <label for="nama" class="font-bold">
+                      Nama
                     </label>
                     <div>
                       <input
                         type="text"
                         class="bg-gray-100 border w-full rounded-md focus:outline-none focus:border-teal-400 focus:bg-white p-2"
-                        placeholder="Masukkan Nama Tahun Ajaran"
+                        placeholder="Masukkan Nama Kelas"
                         v-model="form.nama"
                       />
                       <em
@@ -208,7 +269,8 @@ export default {
       isLoading: false,
       form: new Form({
         nama: "",
-        akreditasi: ""
+        jurusanId: "",
+        tingkatanId: ""
       }),
       errors: [],
       isTableLoading: true,
@@ -219,13 +281,15 @@ export default {
     };
   },
   computed: {
-    ...mapState(["Kelas"])
+    ...mapState(["Kelas", "Jurusan", "Tingkatan"])
   },
   mounted() {
     this.$store.dispatch("Kelas/getDataKelas", {
       page: this.page,
       limit: this.limit
     });
+    this.$store.dispatch("Jurusan/getJurusan")
+    this.$store.dispatch("Tingkatan/getTingkatan")
   },
   methods: {
     getRuangan() {
@@ -257,7 +321,7 @@ export default {
       this.errors = [];
       this.isLoading = true;
       this.form
-        .post("/api/data-induk/tahun-ajaran")
+        .post("/api/data-induk/kelas")
         .then(response => {
           this.isLoading = false;
           this.form.reset();
@@ -283,7 +347,7 @@ export default {
       this.errors = [];
       this.isLoading = true;
       this.form
-        .put("/api/data-induk/tahun-ajaran/" + id)
+        .put("/api/data-induk/kelas/" + id)
         .then(response => {
           this.isLoading = false;
           this.$swal({
@@ -306,15 +370,15 @@ export default {
     },
     modal() {
       this.errors = [];
-      this.form.reset()
-      this.form.clear()
+      this.form.reset();
+      this.form.clear();
       this.editMode = false;
       this.showModal = true;
     },
     edit(id) {
       this.errors = [];
-      this.form.reset()
-      this.form.clear()
+      this.form.reset();
+      this.form.clear();
       this.editMode = true;
       this.showModal = true;
       this.getDetailJurusan(id);
@@ -328,7 +392,7 @@ export default {
       this.notif = true;
     },
     loadingData() {
-      this.$store.dispatch("TahunAjaran/getTahunAjaran", {
+      this.$store.dispatch("Kelas/getDataKelas", {
         page: this.page,
         limit: this.limit
       });
@@ -361,7 +425,7 @@ export default {
       }).then(result => {
         if (result.isConfirmed) {
           axios
-            .delete("/api/data-induk/tahun-ajaran/" + id)
+            .delete("/api/data-induk/kelas/" + id)
             .then(response => {
               this.$swal({
                 icon: "success",

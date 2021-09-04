@@ -13,6 +13,7 @@ import vSelect from 'vue-select'
 import { Form } from 'vform' 
 import VueApexCharts from 'vue-apexcharts'
 import VueTailwindDatepicker from '@coding-wisely/vue-tailwind-datepicker'
+import moment from 'moment'
 
 //date picker
 Vue.use(VueTailwindDatepicker)
@@ -51,6 +52,19 @@ Vue.use(VueApexCharts)
 Vue.component('apexcharts', VueApexCharts)
 
 axios.defaults.baseURL = process.env.VUE_APP_ROOT_API
+
+// interceptor untuk update token 
+axios.interceptors.request.use(
+  config => {
+    const token = 'Bearer ' + JSON.parse(localStorage.getItem('tokenLog'))
+    config.headers.authorization = token
+    return config
+  },
+  error => Promise.reject(error)
+)
+
+// moment
+Vue.prototype.moment = moment
 
 Vue.config.productionTip = false
 

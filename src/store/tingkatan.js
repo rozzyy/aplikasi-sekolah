@@ -5,17 +5,17 @@
 
 import axios from 'axios'
 
-export const tahun_ajaran = {
+export const jurusan = {
     namespaced: true,
     state: {
-        tahun_ajaran: [],
-        tahunAjaranOptions: [],
+        tingkatan: [],
+        tingkatanOptions: [],
         isLoading: false,
         total_page: 0
     },
     mutations: {
-        inputTahunAjaran (state, data) {
-            state.tahun_ajaran = data
+        inputTingkatan (state, data) {
+            state.tingkatan = data
         },
         inputLoading (state, value) {
             state.isLoading = value
@@ -23,32 +23,33 @@ export const tahun_ajaran = {
         inputTotalPage (state, value) {
             state.total_page = value
         },
-        inputTahunAjaranOptions (state, data) {
-            state.tahunAjaranOptions = data
+        inputOptionTingkatan (state, data) {
+            state.tingkatanOptions = data
         }
     },
     actions: {
-        getTahunAjaran({ commit }, params) {
+        getDataTingkatan ({ commit }, params) {
             commit('inputLoading', true)
-            axios.get('/api/data-induk/tahun-ajaran', { params: params }).then(response => {
+            axios.get('/api/data-induk/tingkatan', { params: params }).then(response => {
                 setTimeout(function () {
                     commit('inputLoading', false)
+                    console.log(response)
                     commit('inputTotalPage', response.data.data.count)
-                    commit('inputTahunAjaran', response.data.data.rows)
+                    commit('inputTingkatan', response.data.data.rows)
                 }, 2000)
             }).catch(error => {
                 commit('inputLoading', false)
                 console.log(error)
             })
         },
-        getTahunAjaranOptions({ commit }) {
-            axios.get('/api/data-induk/tahun-ajaran-options').then(response => {
-                setTimeout(function () {
-                    commit('inputTahunAjaranOptions', response.data.data)
-                }, 2000)
+        getTingkatan ({ commit }) {
+            axios.get('/api/data-induk/tingkatan-options').then(response => {
+                commit('inputOptionTingkatan', response.data.data)
+            }).catch(error => {
+                console.log(error)
             })
         }
     }
 }
 
-export default tahun_ajaran
+export default jurusan

@@ -16,7 +16,8 @@
         </div>
         <form @submit.prevent="login">
           <div class="m-3">
-            <label for="nip">NIP/NISN</label>
+            <div v-if="msg" class="text-red-800 text-sm bg-red-300 py-2 rounded-md text-center">{{ msg }}</div>
+            <label for="nip">NIP</label>
             <div class="text-black">
               <div class="inline-flex w-full">
                 <div
@@ -99,12 +100,14 @@ export default {
         password: ""
       },
       errors: [],
-      isLoading: false
+      isLoading: false,
+      msg: ''
     };
   },
   methods: {
     login() {
       this.errors = ''
+      this.msg = ''
       this.isLoading = true
       axios
         .post("/api/auth/login", this.form)
@@ -132,6 +135,8 @@ export default {
           this.isLoading = false
           if (error.response.status === 400) {
             this.errors = error.response.data.errors;
+          } else if (error.response.status === 500) {
+            this.msg = error.response.data.msg
           }
         });
     }

@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col">
-    <nav class="bg-gray-800 z-40 w-full pb-2 fixed">
+  <div>
+    <nav class="bg-gray-800 z-40 w-full pb-2 px-2 pt-1 fixed">
       <div class="grid grid-cols-12 shadow-md">
         <div class="col-span-6">
           <div class="grid grid-cols-12 text-white py-1">
@@ -20,9 +20,9 @@
         <div class="col-span-6">
           <div class="grid grid-cols-12">
             <div class="col-span-8">
-              <div class="bg-gray-400 rounded-full h-12 w-12 float-right m-1">
-                <div class="text-center mt-3">
-                  <i class="fa fa-user"></i>
+              <div class="bg-gray-400 overflow-hidden rounded-full h-12 w-12 float-right m-1">
+                <div class="text-center">
+                  <img :src="foto" alt="userIcon" class="w-full">
                 </div>
               </div>
             </div>
@@ -68,8 +68,8 @@
         </div>
       </div>
     </nav>
-    <div class="flex flex-row pt-16">
-      <nav class="overflow-auto bg-indigo-700 text-white w-2/12 fixed h-full">
+    <div class="flex pt-16">
+      <nav class="overflow-auto bg-indigo-700 text-white w-56 fixed h-full">
         <ul>
           <li class="my-1 cursor-pointer" @click="notDropdown">
             <router-link
@@ -95,7 +95,6 @@
             class="cursor-pointer my-2"
             v-for="(item, index) in menu"
             :key="index"
-            @click="dropdown(item.name)"
           >
             <div
               :class="{
@@ -104,8 +103,9 @@
                 'p-2': true,
                 rounded: true,
                 'hover:bg-indigo-900': true,
-                'bg-indigo-900': menuName === item.name
+                'bg-indigo-900': hide == index + 1
               }"
+              @click="dropdown(index + 1)"
             >
               <div class="col-span-2">
                 <i :class="item.icon"></i>
@@ -118,7 +118,7 @@
                     'fa-angle-right': true,
                     'float-right': true,
                     transform: true,
-                    'rotate-90': menuName === item.name,
+                    'rotate-90': hide == index + 1,
                     'transition-all': true,
                     'duration-200': true,
                     'ease-in': true
@@ -126,7 +126,7 @@
                 ></i>
               </div>
             </div>
-            <ul class="bg-indigo-800" v-if="menuName === item.name">
+            <ul :class="{'bg-indigo-800': true, 'hidden': hide !== index + 1}">
               <li
                 :class="{
                   'p-3': true,
@@ -151,7 +151,7 @@
         </ul>
       </nav>
       <div class="ml-48 w-11/12">
-        <div class="flex flex-col ml-8 mr-3 my-3">
+        <div class="flex flex-col ml-12 sm:ml-14 mr-3 my-5">
           <router-view></router-view>
         </div>
       </div>
@@ -164,14 +164,16 @@
 // eslint-disable-next-line
 // eslint-disable vue/no-unused-vars
 // eslint-disable-line no-unused-vars
+import foto from '../../assets/user3.webp'
 
 export default {
   data() {
     return {
+      foto: foto,
       menuName: "",
       showSet: false,
-      user: JSON.parse(localStorage.getItem("user")),
-      role: JSON.parse(localStorage.getItem("role")),
+      user: '',
+      role: '',
       menu: [
         // {
         //   name: "Sekolah",
@@ -287,12 +289,33 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      hide: '',
+      hideArr: []
     };
+  },
+  mounted() { 
+    this.$on('update-side', (value) => {
+      if (this.hideArr[0] == value) {
+        if (this.hideArr.length == 1) {
+          this.hide = value
+          this.hideArr.push(value)
+        } else {
+          this.hide = ''
+          this.hideArr = []
+        }
+      } else {
+        this.hide = value
+        this.hideArr = []
+      }
+    })
+    this.user = JSON.parse(localStorage.getItem('user'))
+    this.role = JSON.parse(localStorage.getItem('role'))
   },
   methods: {
     dropdown(value) {
-      this.menuName = value;
+      this.hideArr.push(value)
+      this.$emit('update-side', value)
     },
     notDropdown() {
       this.menuName = "";

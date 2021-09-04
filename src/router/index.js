@@ -33,6 +33,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
         meta: {
           requiresAuth: true,
+          access: ['guru']
         }
       },
       {
@@ -41,6 +42,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/ProfilGuru.vue'),
         meta: {
           requiresAuth: true,
+          access: ['guru']
         }
       },
       {
@@ -49,6 +51,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "tugas" */ '../views/Tugas.vue'),
         meta: {
           requiresAuth: true,
+          access: ['guru']
         }
       },
       {
@@ -57,6 +60,16 @@ const routes = [
         component: () => import(/* webpackChunkName: "elearning" */ '../views/Elearning.vue'),
         meta: {
           requiresAuth: true,
+          access: ['guru']
+        }
+      },
+      {
+        path: '/jadwal',
+        name: 'Jadwal',
+        component: () => import(/* webpackChunkName: "jadwal" */ '../views/Jadwal.vue'),
+        meta: {
+          requiresAuth: true,
+          access: ['guru']
         }
       },
     ]
@@ -67,6 +80,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "office" */ '../views/admin/Dashboard.vue'),
     meta: {
       requiresAuth: true,
+      access: ['staff']
     },
     children: [
       {
@@ -75,6 +89,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "adminhome" */ '../views/admin/home/Home.vue'),
         meta: {
           requiresAuth: true,
+          access: ['staff']
         }
       },
       {
@@ -83,6 +98,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "listsekolah" */ '../views/admin/sekolah/data_sekolah/ListSekolah.vue'),
         meta: {
           requiresAuth: true,
+          access: ['staff']
         }
       },
       {
@@ -91,6 +107,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "listruangan" */ '../views/admin/sekolah/data_ruangan/ListRuangan.vue'),
         meta: {
           requiresAuth: true,
+          access: ['staff']
         }
       },
       {
@@ -99,6 +116,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "listtahunajaran" */ '../views/admin/sesi_akedemik/tahun_ajaran/ListTahunAjaran.vue'),
         meta: {
           requiresAuth: true,
+          access: ['staff']
         }
       },
       {
@@ -107,6 +125,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "listsemester" */ '../views/admin/sesi_akedemik/semester/ListSemester.vue'),
         meta: {
           requiresAuth: true,
+          access: ['staff']
         }
       },
       {
@@ -118,6 +137,7 @@ const routes = [
         },
         meta: {
           requiresAuth: true,
+          access: ['staff']
         },
         children: [
           {
@@ -126,6 +146,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "listguru" */ '../views/admin/pegawai/guru/ListGuru.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
           {
@@ -134,6 +155,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "addguru" */ '../views/admin/pegawai/guru/AddGuru.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
           {
@@ -142,6 +164,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "addguru" */ '../views/admin/pegawai/guru/AddGuru.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
           {
@@ -150,6 +173,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "detailguru" */ '../views/admin/pegawai/guru/DetailGuru.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
           {
@@ -158,6 +182,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "liststaff" */ '../views/admin/pegawai/staff/ListStaff.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
           {
@@ -166,6 +191,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "addstaff" */ '../views/admin/pegawai/staff/AddStaff.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
           {
@@ -174,6 +200,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "editstaff" */ '../views/admin/pegawai/staff/AddStaff.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
         ]
@@ -187,6 +214,7 @@ const routes = [
         },
         meta: {
           requiresAuth: true,
+          access: ['staff']
         },
         children: [
           {
@@ -195,6 +223,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "listjurusan" */ '../views/admin/pengaturan_kelas/jurusan/ListJurusan.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
           {
@@ -203,6 +232,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "listtingkatan" */ '../views/admin/pengaturan_kelas/tingkatan/ListTingkatan.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
           {
@@ -211,6 +241,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "listkelas" */ '../views/admin/pengaturan_kelas/kelas/ListKelas.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
           {
@@ -219,6 +250,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "listrombel" */ '../views/admin/pengaturan_kelas/rombel/ListRombel.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
           {
@@ -227,6 +259,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "listpelajaran" */ '../views/admin/pengaturan_kelas/pelajaran/ListPelajaran.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
         ]
@@ -240,6 +273,7 @@ const routes = [
         },
         meta: {
           requiresAuth: true,
+          access: ['staff']
         },
         children: [
           {
@@ -248,6 +282,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "listsiswa" */ '../views/admin/siswa/ListSiswa.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
           {
@@ -256,6 +291,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "detailsiswa" */ '../views/admin/siswa/DetailSiswa.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
           {
@@ -264,6 +300,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "addsiswa" */ '../views/admin/siswa/AddSiswa.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
         ]
@@ -277,6 +314,7 @@ const routes = [
         },
         meta: {
           requiresAuth: true,
+          access: ['staff']
         },
         children: [
           {
@@ -285,6 +323,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "addsiswa" */ '../views/admin/elearning/ListElearning.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
         ]
@@ -298,6 +337,7 @@ const routes = [
         },
         meta: {
           requiresAuth: true,
+          access: ['staff']
         },
         children: [
           {
@@ -306,6 +346,7 @@ const routes = [
             component: () => import(/* webpackChunkName: "addsiswa" */ '../views/admin/tugas/ListTugas.vue'),
             meta: {
               requiresAuth: true,
+              access: ['staff']
             }
           },
         ]
@@ -319,6 +360,7 @@ const routes = [
         },
         meta: {
           requiresAuth: true,
+          access: ['staff']
         },
         children: [
           {
@@ -330,6 +372,7 @@ const routes = [
             },
             meta: {
               requiresAuth: true,
+              access: ['staff']
             },
             children: [
               {
@@ -338,6 +381,7 @@ const routes = [
                 component: () => import(/* webpackChunkName: "akunstaff" */ '../views/admin/akun/staff/AkunStaff.vue'),
                 meta: {
                   requiresAuth: true,
+                  access: ['staff']
                 }
               },
             ]
@@ -351,6 +395,7 @@ const routes = [
             },
             meta: {
               requiresAuth: true,
+              access: ['staff']
             },
             children: [
               {
@@ -359,6 +404,7 @@ const routes = [
                 component: () => import(/* webpackChunkName: "akunguru" */ '../views/admin/akun/guru/AkunGuru.vue'),
                 meta: {
                   requiresAuth: true,
+                  access: ['staff']
                 }
               },
             ]
@@ -372,6 +418,7 @@ const routes = [
             },
             meta: {
               requiresAuth: true,
+              access: ['staff']
             },
             children: [
               {
@@ -380,6 +427,7 @@ const routes = [
                 component: () => import(/* webpackChunkName: "akunsiswa" */ '../views/admin/akun/siswa/AkunSiswa.vue'),
                 meta: {
                   requiresAuth: true,
+                  access: ['staff']
                 }
               },
             ]
@@ -404,10 +452,24 @@ router.beforeEach((to, from, next) => {
           params: { nextUrl: to.fullPath }
         })
       } else {
-        next()
+        if (to.matched.some(record => record.meta.access == JSON.parse(localStorage.getItem('role'))[0])) {
+          next()
+        } else {
+          if (to.matched.some(record => record.meta.access == 'guru')) {
+            next({ 
+              path: '/office',
+              params: { nextUrl: to.fullPath }
+            })
+          } else {
+            next({ 
+              path: '/',
+              params: { nextUrl: to.fullPath }
+            })
+          }
+        }
       }
   } else {
       next()
   }
-  })
+})
 export default router
