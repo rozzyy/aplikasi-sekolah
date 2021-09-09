@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <div class="w-16 fixed z-50">
+    <div class="w-16 fixed z-40">
       <div class="bg-indigo-800 h-screen pt-2">
         <nav class="text-white">
           <ul>
@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="w-11/12">
-      <div class="fixed w-full z-40">
+      <div class="fixed w-full z-30">
         <div :class="{'bg-transparent': scrollPosition == null,  'py-2': true, 'text-white': true, 'bg-indigo-800': scrollPosition > 50 || $route.name !== 'Home', 'transition-all': true, 'duration-300': true, 'ease-out': true}">
           <div class="grid grid-cols-2">
             <div class="pl-16 ml-2 mt-3 text-white font-bold">
@@ -47,10 +47,10 @@
                   <i class="fa fa-bell text-2xl"></i>
                 </div>
                 <div
-                  class="bg-gray-300 rounded-full h-10 w-10 mx-3 text-center hover:bg-gray-500 cursor-pointer"
+                  class="bg-gray-300 rounded-full h-12 w-12 mx-3 text-center hover:bg-gray-500 cursor-pointer overflow-hidden"
                   @click="user"
                 >
-                  <i class="fa fa-user text-black mt-3"></i>
+                  <img :src="foto" alt="user">
                 </div>
                 <transition enter-active-class="transition-all duration-300 ease-out" leave-class="transform translate-y-10" leave-active-class="transition-all duration-300 ease-out" enter-class="transform translate-y-10">
                   <div
@@ -75,7 +75,7 @@
           </div>
         </div>
       </div>
-      <div class="w-full pl-16 z-0 absolute">
+      <div class="w-full pl-16 absolute">
         <router-view />
       </div>
     </div>
@@ -87,10 +87,12 @@
 // eslint-disable-next-line
 // eslint-disable vue/no-unused-vars
 // eslint-disable-line no-unused-vars
+import userImg from '../assets/user3.webp'
 
 export default {
   data() {
     return {
+      foto: userImg,
       active2: false,
       input1: "",
       input2: "",

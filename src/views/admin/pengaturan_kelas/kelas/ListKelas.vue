@@ -132,7 +132,7 @@
                   <div class="col-span-6">
                     <div class="text-xl m-3 font-bold">
                       {{
-                        editMode ? "Edit Tahun Ajaran" : "Tambah Tahun Ajaran"
+                        editMode ? "Edit Kelas" : "Tambah Kelas"
                       }}
                     </div>
                   </div>
@@ -261,7 +261,7 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      ruangan: [],
+      kelas: [],
       detail: "",
       showModal: false,
       notif: false,
@@ -292,22 +292,9 @@ export default {
     this.$store.dispatch("Tingkatan/getTingkatan")
   },
   methods: {
-    getRuangan() {
-      this.isTableLoading = true;
+    getDetailKelas(id) {
       axios
-        .get("/api/data-induk/jurusan")
-        .then(response => {
-          this.isTableLoading = false;
-          this.ruangan = response.data.data;
-        })
-        .catch(error => {
-          this.isTableLoading = false;
-          console.log(error);
-        });
-    },
-    getDetailJurusan(id) {
-      axios
-        .get("/api/data-induk/tahun-ajaran/" + id)
+        .get("/api/data-induk/kelas/" + id)
         .then(response => {
           this.detail = response.data.data;
           this.id = this.detail.id;
@@ -381,7 +368,7 @@ export default {
       this.form.clear();
       this.editMode = true;
       this.showModal = true;
-      this.getDetailJurusan(id);
+      this.getDetailKelas(id);
     },
     closeModal() {
       this.editMode = false;
@@ -400,7 +387,7 @@ export default {
     nextPage() {
       this.page = this.page + 1;
       this.currentPage = this.page + 1;
-      this.$store.dispatch("TahunAjaran/getTahunAjaran", {
+      this.$store.dispatch("Kelas/getDataKelas", {
         page: this.page,
         limit: this.limit
       });
@@ -409,7 +396,7 @@ export default {
     prevPage() {
       this.page = this.page - 1;
       this.currentPage = this.page + 1;
-      this.$store.dispatch("TahunAjaran/getTahunAjaran", {
+      this.$store.dispatch("Kelas/getDataKelas", {
         page: this.page,
         limit: this.limit
       });

@@ -5,16 +5,16 @@
 
 import axios from 'axios'
 
-export const semester = {
+export const rombel = {
     namespaced: true,
     state: {
-        semester: [],
+        rombel: [],
         isLoading: false,
         total_page: 0
     },
     mutations: {
-        inputSemester (state, data) {
-            state.semester = data
+        inputRombel (state, data) {
+            state.rombel = data
         },
         inputLoading (state, value) {
             state.isLoading = value
@@ -24,13 +24,13 @@ export const semester = {
         }
     },
     actions: {
-        getSemester({ commit }, params) {
+        getRombel({ commit }, params) {
             commit('inputLoading', true)
-            axios.get('/api/data-induk/semester', { params: params }).then(response => {
+            axios.get('/api/data-induk/rombel/search', { params: params }).then(response => {
                 setTimeout(function () {
                     commit('inputLoading', false)
                     commit('inputTotalPage', response.data.data.count)
-                    commit('inputSemester', response.data.data.rows)
+                    commit('inputRombel', response.data.data.rows)
                 }, 2000)
             }).catch(error => {
                 commit('inputLoading', false)
@@ -40,4 +40,4 @@ export const semester = {
     }
 }
 
-export default semester
+export default rombel

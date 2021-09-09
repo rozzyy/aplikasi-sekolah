@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-16 px-5">
+  <div class="px-5 mt-20">
     <div class="grid grid-cols-12 gap-8">
       <div class="col-span-4">
         <div class="w-full rounded-lg overflow-hidden shadow-lg">

@@ -9,12 +9,16 @@ export const kelas = {
     namespaced: true,
     state: {
         kelas: [],
+        kelasOptions: [],
         isLoading: false,
         total_page: 0
     },
     mutations: {
         inputKelas (state, data) {
             state.kelas = data
+        },
+        inputKelasOptions (state, data) {
+            state.kelasOptions = data
         },
         inputLoading (state, value) {
             state.isLoading = value
@@ -36,6 +40,14 @@ export const kelas = {
                 commit('inputLoading', false)
                 console.log(error)
             })
+        },
+        async getKelasOptions ({ commit }) {
+            try {
+                let response = await axios.get('/api/data-induk/kelas-options')
+                commit("inputKelasOptions", response.data.data)
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 }

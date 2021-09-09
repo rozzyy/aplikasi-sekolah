@@ -47,29 +47,33 @@
         </div>
         <div class="my-3">
           <div class="m-3 grid grid-cols-12">
-            <div class="col-span-2">
-              Halaman ke: {{ currentPage }} / {{ Math.round(total_page / limit) }}
+            <div class="col-span-2 bg-blue-400 mt-5 rounded-md text-white font-bold text-center">
+              Halaman ke: {{ currentPage }} /
+              {{ Math.round(total_page / limit) }}
             </div>
             <div class="col-span-10 text-center">
               <div class="float-right font-bold grid grid-cols-3 gap-2">
-                <div class="text-white bg-green-600 p-2 rounded-md">
-                  Total Staff: {{ total_page }}
+                <div class="text-green-600 border-2 border-green-600 px-4 py-2 rounded-md">
+                  Total Guru: {{ total_page }}
                 </div>
-                <div class="text-white bg-green-600 p-2 rounded-md">
-                  Total Laki-laki: {{ total_page }}
+                <div class="text-green-600 border-2 border-green-600 px-4 py-2 rounded-md">
+                  Total Guru: {{ total_page }}
                 </div>
-                <div class="text-white bg-green-600 p-2 rounded-md">
-                  Total Perempuan: {{ total_page }}
+                <div class="text-green-600 border-2 border-green-600 px-4 py-2 rounded-md">
+                  Total Guru: {{ total_page }}
                 </div>
               </div>
             </div>
           </div>
           <div class="my-8">
-            <div v-if="isLoading" class="text-center my-56 font-bold text-blue-600">
+            <div
+              v-if="isLoading"
+              class="text-center my-56 font-bold text-blue-600"
+            >
               <i class="fa fa-spinner animate-spin"></i>
               Loading...
             </div>
-            <div class="grid grid-cols-12 z-0" v-else>
+            <div class="grid grid-cols-12 gap-4 z-0" v-else>
               <div v-if="!dataStaff">
                 No Result.
               </div>
@@ -80,59 +84,30 @@
                 v-else
               >
                 <div
-                  class="rounded-lg overflow-hidden shadow-lg m-3 transition duration-300 ease-out transform hover:-translate-y-2 cursor-pointer border border-gray-300"
+                  class="bg-gray-800 rounded-md py-4 transition-all duration-300 ease-out transform hover:-translate-y-2 hover:shadow-lg"
                 >
-                  <div class="absolute h-full w-full bg-gradient-to-t from-gray-900">
-                    <transition
-                      enter-active-class="transition-all duration-300 ease-out"
-                      leave-active-class="transition-all duration-300 ease-out"
-                      leave-class="transform translate-x-10"
-                      enter-class="transform translate-x-10"
-                    >
-                      <div
-                        class="inline-flex py-2 absolute mx-8 rounded-md w-7/12"
-                        v-if="showTools == staff.id"
-                        v-click-outside="closeTools"
-                      >
-                        <div class="bg-blue-500 rounded-l-md hover:bg-blue-800">
-                          <div class="text-center w-2/5 py-1 px-4" @click="editStaff(staff.id)">
-                            <i class="fa fa-edit text-white"></i>
-                          </div>
-                        </div>
-                        <div class="bg-red-500 rounded-r-md hover:bg-red-800">
-                          <div class="text-center w-2/5 py-1 px-4" @click="removeStaff(staff.id)">
-                            <i class="fa fa-trash-alt text-white"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </transition>
-                    <div class="grid grid-cols-12">
-                      <i
-                        class="fa fa-bars m-3 text-gray-200 font-bold transform hover:scale-125 col-span-2"
-                        @click="clickTools(staff.id)"
-                      ></i>
-                    </div>
-                    <div class="text-center" style="margin-top: 150px;">
-                      <div class="text-white text-lg font-bold text-center">
-                        {{ staff.nama }}
-                      </div>
-                      <div class="text-center font-bold text-green-500">
-                        {{ staff.status_pegawai }}
-                      </div>
-                      <button
-                        class="bg-teal-500 text-white font-bold px-6 rounded-md hover:bg-teal-700 transition-all duration-300 ease-out transform hover:translate-y-2"
-                        @click="detail(staff.id)"
-                      >
-                        Detail
-                      </button>
-                    </div>
+                  <div
+                    class="overflow-hidden rounded-full mx-auto mt-3 w-32 h-32"
+                  >
+                    <img :src="foto" alt="user" class="w-full" />
                   </div>
-                  <img
-                    class="w-full"
-                    :src="foto"
-                    alt="Sunset in the mountains"
-                    style="height: 300px"
-                  />
+                  <div class="font-bold text-white text-center text-lg">
+                    {{ staff.nama }}
+                  </div>
+                  <div class="text-green-300 font-bold text-center mb-3">
+                    Staff Aktif
+                  </div>
+                  <div class="bg-blue-500 p-3 text-center font-bold text-white">
+                    {{ staff.status_pegawai }}
+                  </div>
+                  <div class="mt-3 text-center">
+                    <button
+                      class="font-bold text-white px-8 border-2 hover:bg-white hover:text-gray-800 hover:border-none rounded-md"
+                      @click="detail(staff.id)"
+                    >
+                      Detail
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -165,8 +140,8 @@
 // eslint-disable vue/no-unused-vars
 // eslint-disable-line no-unused-vars
 import foto from "@/assets/user3.webp";
-import { mapState } from 'vuex'
-import axios from 'axios'
+import { mapState } from "vuex";
+import axios from "axios";
 
 export default {
   data() {
@@ -177,18 +152,17 @@ export default {
       page: 0,
       limit: 12,
       currentPage: 1,
-      q: ''
+      q: ""
     };
   },
   computed: {
-    ...mapState([
-      'dataStaff',
-      'isLoading',
-      'total_page'
-    ])
+    ...mapState(["dataStaff", "isLoading", "total_page"])
   },
   mounted() {
-    this.$store.dispatch('setDataStaff', { page: this.page, limit: this.limit })
+    this.$store.dispatch("setDataStaff", {
+      page: this.page,
+      limit: this.limit
+    });
   },
   methods: {
     tambah() {
@@ -200,18 +174,28 @@ export default {
     closeTools() {
       this.showTools = "";
     },
-    nextPage () {
-      this.page = this.page + 1
-      this.currentPage = this.page + 1
-      this.$store.dispatch('setDataStaff', { page: this.page, limit: this.limit })
+    nextPage() {
+      this.page = this.page + 1;
+      this.currentPage = this.page + 1;
+      this.$store.dispatch("setDataStaff", {
+        page: this.page,
+        limit: this.limit
+      });
     },
-    prevPage () {
-      this.page = this.page - 1
-      this.currentPage = this.page + 1
-      this.$store.dispatch('setDataStaff', { page: this.page, limit: this.limit })
+    prevPage() {
+      this.page = this.page - 1;
+      this.currentPage = this.page + 1;
+      this.$store.dispatch("setDataStaff", {
+        page: this.page,
+        limit: this.limit
+      });
     },
-    search () {
-       this.$store.dispatch('setDataStaff', { page: this.page, limit: this.limit, q:this.q })
+    search() {
+      this.$store.dispatch("setDataStaff", {
+        page: this.page,
+        limit: this.limit,
+        q: this.q
+      });
     },
     removeStaff(id) {
       axios.delete("/api/profil/pegawai/" + id).then(response => {
@@ -226,14 +210,17 @@ export default {
           showCloseButton: true,
           timer: 5000
         });
-        this.$store.dispatch('setDataStaff', { page: this.page, limit: this.limit })
+        this.$store.dispatch("setDataStaff", {
+          page: this.page,
+          limit: this.limit
+        });
       });
     },
-    editStaff (id) {
-      this.$router.push({ name: 'EditStaff', params: { id: id }})
+    editStaff(id) {
+      this.$router.push({ name: "EditStaff", params: { id: id } });
     },
-    detail (id) {
-      this.$router.push({ name: 'DetailGuru', params: { id: id }})
+    detail(id) {
+      this.$router.push({ name: "DetailGuru", params: { id: id } });
     }
   }
 };

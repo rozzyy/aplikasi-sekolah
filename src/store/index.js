@@ -7,6 +7,7 @@ import Kelas from './kelas'
 import Tingkatan from './tingkatan'
 import User from './user'
 import Semester from './semester'
+import Rombel from './rombel'
 
 Vue.use(Vuex)
 
@@ -90,6 +91,7 @@ export default new Vuex.Store({
     Kelas,
     Tingkatan,
     User,
-    Semester
+    Semester,
+    Rombel
   }
 })
