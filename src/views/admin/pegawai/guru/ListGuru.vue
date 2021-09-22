@@ -51,13 +51,7 @@
             </div>
             <div class="col-span-10 text-center">
               <div class="float-right font-bold grid grid-cols-3 gap-2">
-                <div class="text-green-600 border-2 border-green-600 px-4 py-2 rounded-md">
-                  Total Guru: {{ total_page }}
-                </div>
-                <div class="text-green-600 border-2 border-green-600 px-4 py-2 rounded-md">
-                  Total Guru: {{ total_page }}
-                </div>
-                <div class="text-green-600 border-2 border-green-600 px-4 py-2 rounded-md">
+                <div class="text-white px-2 mt-5 bg-green-400 rounded-md">
                   Total Guru: {{ total_page }}
                 </div>
               </div>
